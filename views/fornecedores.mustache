@@ -1,0 +1,397 @@
+{{> partials/header}}
+<!-- End of Topbar ################################## -->
+<!-- Modal -->
+<div class="modal fade" id="Modal-cadastrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Novo Fornecedor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formFornecedor">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Razão Social</label>
+                            <input type="text" name="nome" class="form-control" id="nome" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">CNPJ</label>
+                            <input type="text" name="cnpj" class="form-control" id="cnpj" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Estado</label>
+                            <input type="text" name="estado" class="form-control" id="estado" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Cidade</label>
+                            <input type="text" class="form-control" name="cidade" id="cidade" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Bairro</label>
+                            <input type="text" class="form-control" name="bairro" id="bairro" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Rua</label>
+                            <input type="text" class="form-control" name="rua" id="rua" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Numero</label>
+                            <input type="text" class="form-control" name="numero" id="numero" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Complemento</label>
+                            <input type="text" class="form-control" name="complemento" id="complemento">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Telefone</label>
+                            <input type="text" class="form-control" name="telefone" id="telefone" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Email</label>
+                            <input type="text" class="form-control" name="email" id="email" required>
+                            <input type="hidden" class="form-control" name="idEmpresa" id="idEmpresa" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="formFornecedor" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Editar -->
+<div class="modal fade" id="Modal-editar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Registro
+
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formFornecedorEdit">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Razão Social</label>
+                            <input type="text" name="nome" class="form-control" id="nomeEdit" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">CNPJ</label>
+                            <input type="text" name="cnpj" class="form-control" id="cnpjEdit" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Estado</label>
+                            <input type="text" name="estado" class="form-control" id="estadoEdit" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Cidade</label>
+                            <input type="text" class="form-control" name="cidade" id="cidadeEdit" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Bairro</label>
+                            <input type="text" class="form-control" name="bairro" id="bairroEdit" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Rua</label>
+                            <input type="text" class="form-control" name="rua" id="ruaEdit" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Numero</label>
+                            <input type="text" class="form-control" name="numero" id="numeroEdit" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Complemento</label>
+                            <input type="text" class="form-control" name="complemento" id="complementoEdit">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Telefone</label>
+                            <input type="text" class="form-control" name="telefone" id="telefoneEdit" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Email</label>
+                            <input type="text" class="form-control" name="email" id="emailEdit" required>
+                            <input type="hidden" class="form-control" name="id" id="idFornecedorEdit" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="formFornecedorEdit" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-gradient-secondary"><b>Fornecedores</b></h6>
+            <button type="button" class="btn btn-secondary" data-toggle="modal" title="Adicionar Fornecedor"
+                data-target="#Modal-cadastrar">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+
+        {{! <div class="row justify-content-end pr-3 mt-1">
+            <a href="#" class="btn btn-danger btn-circle mx-1" title="Excluir" data-toggle="modal"
+                data-target="#deletModal">
+
+            </a>
+        </div> }}
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="">
+                    <thead>
+                        <tr>
+                            <th>Fornecedor</th>
+                            <th>CNPJ</th>
+                            <th>Cidade</th>
+                            <th>Telefone</th>
+                            <th class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Fornecedor</th>
+                            <th>CNPJ</th>
+                            <th>Cidade</th>
+                            <th>Telefone</th>
+                            <th class="text-center"></th>
+                        </tr>
+                    </tfoot>
+                    <tbody id="fornecedores">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid-->
+
+</div>
+
+<!-- Delete Modal-->
+<div class="modal fade" id="deletModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tem certeza que deseja excluir?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body delete-fornecedor">
+                <p class="nome-fornecedor"></p>
+                <p class="cnpj-fornecedor"></p>
+                <form id="deleteFornecedor">
+                    <input type="hidden" class="form-control" name="id" id="idFornecedorDelete" value="" required>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                <button type="submit" form="deleteFornecedor" class="btn btn-danger">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function listFornecedores() {
+        $.ajax({
+            type: 'GET',
+            url: `/fornecedores-list`,
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+                let list = ''
+                for (fornecedores of data) {
+
+                    list += `
+                    <tr>
+                        <td>${fornecedores.nome}</td>
+                        <td>${fornecedores.cnpj}</td>
+                        <td>${fornecedores.cidade}-${fornecedores.estado}</td>
+                        <td>${fornecedores.telefone}</td>
+                        <td class="text-center">
+                            <div class="dropdown no-arrow">
+                                <a data-id-check="${fornecedores.id}" class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
+                                </a>
+                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                        <a data-id="${fornecedores.id}" data-nome="${fornecedores.nome}" data-cnpj="${fornecedores.cnpj}" data-estado="${fornecedores.estado}" data-cidade="${fornecedores.cidade}" data-bairro="${fornecedores.bairro}" data-rua="${fornecedores.rua}" data-numero="${fornecedores.numero}" data-complemento="${fornecedores.complemento}" data-telefone="${fornecedores.telefone}" data-email="${fornecedores.email}" class="dropdown-item mb-1" data-toggle="modal" id="editar" data-target="#Modal-editar"><b>Editar</b></a>
+                                        <hr class="sidebar-divider my-0">
+                                        <a data-id-delete="${fornecedores.id}" id="excluir" data-nome-delete="${fornecedores.nome}" data-cnpj-delete="${fornecedores.cnpj}" class="dropdown-item mt-1" data-toggle="modal" style="color:#ff1212" data-target="#deletModal"><b>Excluir</b></a>
+                                    </div>
+                            </div>
+                        </td>
+                    </tr>`
+                }
+
+                $("#fornecedores").append(list)
+
+            }
+
+        })
+    }
+
+    $('#formFornecedor').on("submit", function (e) {
+
+        e.preventDefault();
+        let formData = new FormData($("#formFornecedor").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        $.ajax({
+
+            url: '/novo-fornecedor',
+            method: 'POST',
+            dataType: 'json',
+            data,
+            success: function (response) {
+                alert('Salvo com sucesso!')
+                listFornecedores();
+            }, error: function (e) {
+                console.log(e);
+            }
+
+        });
+    });
+
+    $('#formFornecedorEdit').on("submit", function (e) {
+
+        e.preventDefault();
+        let formData = new FormData($("#formFornecedorEdit").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        $.ajax({
+
+            url: '/edit-fornecedor',
+            method: 'POST',
+            dataType: 'json',
+            data,
+            success: function (response) {
+                alert(response.message)
+                location.reload();
+            }, error: function (e) {
+                console.log(e);
+            }
+
+        });
+    });
+
+    $('#deleteFornecedor').on("submit", function (e) {
+
+        e.preventDefault();
+        let formData = new FormData($("#deleteFornecedor").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        $.ajax({
+
+            url: '/delete-fornecedor',
+            method: 'POST',
+            dataType: 'json',
+            data,
+            success: function (response) {
+                alert(response.message)
+                location.reload();
+            }, error: function (e) {
+                console.log(e);
+            }
+
+        });
+    });
+
+
+    $("#fornecedores").on('click', '#excluir', function () {
+
+        let nome = $(this).data('nome-delete')
+        let cnpj = $(this).data('cnpj-delete')
+
+        $('.nome-fornecedor').html('<b>Fornecedor:</b> ' + nome + '.');
+        $('.cnpj-fornecedor').html('<b>CNPJ:</b> ' + cnpj + '.');
+
+    });
+
+    $("#fornecedores").on('click', '#editar', function () {
+
+        let nome = $(this).data('nome')
+        let cnpj = $(this).data('cnpj')
+        let estado = $(this).data('estado')
+        let cidade = $(this).data('cidade')
+        let bairro = $(this).data('bairro')
+        let rua = $(this).data('rua')
+        let numero = $(this).data('numero')
+        let complemento = $(this).data('complemento')
+        let telefone = $(this).data('telefone')
+        let email = $(this).data('email')
+        let idFornecedor = $(this).data('id')
+
+        $('#nomeEdit').val(nome);
+        $('#cnpjEdit').val(cnpj);
+        $('#estadoEdit').val(estado);
+        $('#cidadeEdit').val(cidade);
+        $('#bairroEdit').val(bairro);
+        $('#ruaEdit').val(rua);
+        $('#numeroEdit').val(numero);
+        $('#complementoEdit').val(complemento);
+        $('#telefoneEdit').val(telefone);
+        $('#emailEdit').val(email);
+        $('#idFornecedorEdit').val(idFornecedor);
+
+    });
+
+    $("#fornecedores").on('click', '#excluir', function () {
+
+        let idFornecedor = $(this).data('id-delete')
+
+        $('#idFornecedorDelete').val(idFornecedor);
+
+    });
+
+    listFornecedores();
+</script>
+{{> partials/footer}}

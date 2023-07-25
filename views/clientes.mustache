@@ -1,0 +1,400 @@
+{{> partials/header}}
+<!-- End of Topbar ################################## -->
+<!-- Modal -->
+<div class="modal fade" id="Modal-cadastrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Novo Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formCliente">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Nome</label>
+                            <input type="text" class="form-control" name="nome" id="nome" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">CPF/CNPJ</label>
+                            <input type="text" class="form-control" name="cpfcnpj" id="cpfcnpj" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Estado</label>
+                            <input type="text" class="form-control" name="estado" id="estado" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Cidade</label>
+                            <input type="text" class="form-control" name="cidade" id="cidade" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Bairro</label>
+                            <input type="text" class="form-control" name="bairro" id="bairro" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Rua</label>
+                            <input type="text" class="form-control" name="rua" id="rua" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Numero</label>
+                            <input type="text" class="form-control" name="numero" id="numero" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Complemento</label>
+                            <input type="text" class="form-control" name="complemento" id="complemento">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Telefone</label>
+                            <input type="text" class="form-control" name="telefone" id="telefone" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Email</label>
+                            <input type="text" class="form-control" name="email" id="email" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="formCliente" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Editar -->
+<div class="modal fade" id="Modal-editar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Registro
+
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formClienteEdit">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Razão Social</label>
+                            <input type="text" name="nome" class="form-control" id="nomeEdit" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">CPF/CNPJ</label>
+                            <input type="text" name="cpfcnpj" class="form-control" id="cnpjEdit" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Estado</label>
+                            <input type="text" name="estado" class="form-control" id="estadoEdit" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Cidade</label>
+                            <input type="text" class="form-control" name="cidade" id="cidadeEdit" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Bairro</label>
+                            <input type="text" class="form-control" name="bairro" id="bairroEdit" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Rua</label>
+                            <input type="text" class="form-control" name="rua" id="ruaEdit" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Numero</label>
+                            <input type="text" class="form-control" name="numero" id="numeroEdit" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Complemento</label>
+                            <input type="text" class="form-control" name="complemento" id="complementoEdit">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Telefone</label>
+                            <input type="text" class="form-control" name="telefone" id="telefoneEdit" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Email</label>
+                            <input type="text" class="form-control" name="email" id="emailEdit" required>
+                            <input type="hidden" class="form-control" name="id" id="idClienteEdit" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="formClienteEdit" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-gradient-secondary"><b>Clientes</b></h6>
+            <button type="button" class="btn btn-secondary" data-toggle="modal" title="Adicionar Cliente"
+                data-target="#Modal-cadastrar">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>CPF/CNPJ</th>
+                            <th>Cidade</th>
+                            <th>Telefone</th>
+                            <th class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>CPF/CNPJ</th>
+                            <th>Cidade</th>
+                            <th>Status</th>
+                            <th class="text-center"></th>
+                        </tr>
+                    </tfoot>
+                    <tbody id="clientes">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid-->
+
+</div>
+
+<!-- Delete Modal-->
+<div class="modal fade" id="deletModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tem certeza que deseja excluir?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body delete-cliente">
+                <p class="nome-cliente"></p>
+                <p class="cnpj-cliente"></p>
+                <form id="deleteCliente">
+                    <input type="hidden" class="form-control" name="id" id="idClienteDelete" value="" required>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                <button type="submit" form="deleteCliente" class="btn btn-danger">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Baixar Modal-->
+<div class="modal fade" id="baixaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Atenção!</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Clique em "Baixar" para dar baixa nos registros selecionados.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                <a class="btn btn-success" href="login.html">Baixar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function listClientes() {
+        $.ajax({
+            type: 'GET',
+            url: `/clientes-list`,
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+                let list = ''
+                for (clientes of data) {
+
+                    list += `
+                    <tr>
+                        <td>${clientes.nome}</td>
+                        <td>${clientes.cpfcnpj}</td>
+                        <td>${clientes.cidade}-${clientes.estado}</td>
+                        <td>${clientes.telefone}</td>
+                        <td class="text-center">
+                            <div class="dropdown no-arrow">
+                                <a data-id-check="${clientes.id}" class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
+                                </a>
+                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                        <a data-id="${clientes.id}" data-nome="${clientes.nome}" data-cnpj="${clientes.cpfcnpj}" data-estado="${clientes.estado}" data-cidade="${clientes.cidade}" data-bairro="${clientes.bairro}" data-rua="${clientes.rua}" data-numero="${clientes.numero}" data-complemento="${clientes.complemento}" data-telefone="${clientes.telefone}" data-email="${clientes.email}" class="dropdown-item mb-1" data-toggle="modal" id="editar" data-target="#Modal-editar"><b>Editar</b></a>
+                                        <hr class="sidebar-divider my-0">
+                                        <a data-id-delete="${clientes.id}" id="excluir" data-nome-delete="${clientes.nome}" data-cnpj-delete="${clientes.cpfcnpj}" class="dropdown-item mt-1" data-toggle="modal" style="color:#ff1212" data-target="#deletModal"><b>Excluir</b></a>
+                                    </div>
+                            </div>
+                        </td>
+                    </tr>`
+                }
+
+                $("#clientes").append(list)
+
+            }
+
+        })
+    }
+
+
+    $('#formCliente').on("submit", function (e) {
+
+        e.preventDefault();
+        let formData = new FormData($("#formCliente").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        $.ajax({
+            url: '/novo-cliente',
+            method: 'POST',
+            dataType: 'json',
+            data,
+            success: function (response) {
+                alert('Salvo com sucesso!')
+            }, error: function (e) {
+                console.log(e);
+            }
+
+        });
+    });
+
+    $('#formClienteEdit').on("submit", function (e) {
+
+        e.preventDefault();
+        let formData = new FormData($("#formClienteEdit").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        $.ajax({
+
+            url: '/edit-cliente',
+            method: 'POST',
+            dataType: 'json',
+            data,
+            success: function (response) {
+                alert(response.message)
+                location.reload();
+            }, error: function (e) {
+                console.log(e);
+            }
+
+        });
+    });
+
+    $('#deleteCliente').on("submit", function (e) {
+
+        e.preventDefault();
+        let formData = new FormData($("#deleteCliente").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        $.ajax({
+
+            url: '/delete-cliente',
+            method: 'POST',
+            dataType: 'json',
+            data,
+            success: function (response) {
+                alert(response.message)
+                location.reload();
+            }, error: function (e) {
+                console.log(e);
+            }
+
+        });
+    });
+
+    $("#clientes").on('click', '#editar', function () {
+
+        let nome = $(this).data('nome')
+        let cnpj = $(this).data('cnpj')
+        let estado = $(this).data('estado')
+        let cidade = $(this).data('cidade')
+        let bairro = $(this).data('bairro')
+        let rua = $(this).data('rua')
+        let numero = $(this).data('numero')
+        let complemento = $(this).data('complemento')
+        let telefone = $(this).data('telefone')
+        let email = $(this).data('email')
+        let idCliente = $(this).data('id')
+
+        $('#nomeEdit').val(nome);
+        $('#cnpjEdit').val(cnpj);
+        $('#estadoEdit').val(estado);
+        $('#cidadeEdit').val(cidade);
+        $('#bairroEdit').val(bairro);
+        $('#ruaEdit').val(rua);
+        $('#numeroEdit').val(numero);
+        $('#complementoEdit').val(complemento);
+        $('#telefoneEdit').val(telefone);
+        $('#emailEdit').val(email);
+        $('#idClienteEdit').val(idCliente);
+
+    });
+
+    $("#clientes").on('click', '#excluir', function () {
+
+        let nome = $(this).data('nome-delete')
+        let cnpj = $(this).data('cnpj-delete')
+        let idCliente = $(this).data('id-delete')
+
+        $('#idClienteDelete').val(idCliente);
+
+        $('.nome-cliente').html('<b>Cliente:</b> ' + nome + '.');
+        $('.cnpj-cliente').html('<b>CPF/CNPJ:</b> ' + cnpj + '.');
+
+    });
+
+    listClientes();
+</script>
+{{> partials/footer}}

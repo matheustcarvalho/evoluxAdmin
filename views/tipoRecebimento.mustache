@@ -1,0 +1,205 @@
+{{> partials/header}}
+<!-- End of Topbar ################################## -->
+<!-- Modal -->
+<div class="modal fade" id="Modal-cadastrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Novo Tipo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="tipoRecebimento">
+                    <div class="form-group">
+                        <label for="validationTooltip01">Tipo de Pagamento:</label>
+                        <input type="text" class="form-control" name="descricao" id="descricao" required>
+                        <input type="hidden" name="idEmpresa" id="idEmpresa" value="1">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="tipoRecebimento" class="btn btn-primary">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-gradient-secondary"><b>Tipos de Recebimento</b></h6>
+            <button type="button" class="btn btn-secondary" data-toggle="modal" title="Adicionar Pagamento"
+                data-target="#Modal-cadastrar">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="">
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Registro</th>
+                            <th>Status</th>
+                            <th class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Registro</th>
+                            <th>Status</th>
+                            <th class="text-center"></th>
+                        </tr>
+                    </tfoot>
+                    <tbody id="tipos">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid-->
+
+</div>
+
+<!-- Delete Modal-->
+<div class="modal fade" id="deletModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tem certeza que deseja excluir?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body delete-tipo">
+                <p class="nome-tipo"></p>
+                <form id="deleteTipo">
+                    <input type="hidden" class="form-control" name="id" id="idTipoDelete" value="" required>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                <button type="submit" form="deleteTipo" class="btn btn-danger">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function listTipos() {
+        $.ajax({
+            type: 'GET',
+            url: `/tipos-recebimento-list`,
+            dataType: 'json',
+            success: function (data) {
+
+                let list = ''
+                for (tipos of data) {
+                    let data = tipos.registro.split('T')[0]
+                    let dataForm = data.split('-');
+                    let dia = dataForm[2];
+                    let mes = dataForm[1];
+                    let ano = dataForm[0];
+
+                    list += `
+                    <tr>
+                        <td>${tipos.descricao}</td>
+                        <td>${dia}/${mes}/${ano}</td>
+                        <td>${tipos.status == 'A' ? 'Ativo' : 'Inativo'}</td>
+                        <td class="text-center">
+                            <div class="dropdown no-arrow">
+                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
+                                </a>
+                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                        <a data-id-delete="${tipos.id}" id="excluir" data-nome-delete="${tipos.descricao}" class="dropdown-item mt-1" data-toggle="modal" style="color:#ff1212" data-target="#deletModal"><b>Excluir</b></a>
+                                    </div>
+                            </div>
+                        </td>
+                    </tr>`
+                }
+
+                $("#tipos").append(list)
+
+            }
+
+        })
+    }
+
+    $('#tipoRecebimento').on("submit", function (e) {
+
+        e.preventDefault();
+        let formData = new FormData($("#tipoRecebimento").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        $.ajax({
+            url: '/novo-tipo-receber',
+            method: 'POST',
+            dataType: 'json',
+            data,
+            success: function (response) {
+                alert('Salvo com sucesso!')
+                location.reload();
+            }, error: function (e) {
+                console.log(e);
+            }
+
+        });
+    });
+
+    $('#deleteTipo').on("submit", function (e) {
+
+        e.preventDefault();
+        let formData = new FormData($("#deleteTipo").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        $.ajax({
+
+            url: '/delete-tipo-recebimento',
+            method: 'POST',
+            dataType: 'json',
+            data,
+            success: function (response) {
+                alert(response.message)
+                location.reload();
+            }, error: function (e) {
+                console.log(e);
+            }
+
+        });
+    });
+
+    $("#tipos").on('click', '#excluir', function () {
+
+        let nome = $(this).data('nome-delete')
+        let idTipo = $(this).data('id-delete')
+
+        $('#idTipoDelete').val(idTipo);
+
+        $('.nome-tipo').html('<b>Tipo:</b> ' + nome + '.');
+
+
+    });
+
+    listTipos();
+</script>
+{{> partials/footer}}
