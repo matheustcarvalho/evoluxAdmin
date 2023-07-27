@@ -1,5 +1,8 @@
 const connection = require('../db');
 const service = require('../service/service');
+const loginService = require('../service/login');
+const bcrypt = require('bcrypt');
+
 
 //GET
 const index = (req, res) => {
@@ -173,7 +176,6 @@ const contasReceberList = (req, res) => {
       }
     });
   };
-
 
 //POST
 

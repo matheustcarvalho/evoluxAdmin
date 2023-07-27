@@ -39,14 +39,12 @@ function getFaturamentoGrafico() {
       const valores = data.map(item => item.valorTotal);
       const meses = data.map(item => item.mes_ano);
 
-      console.log(meses)
-
       var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
           labels: meses,
           datasets: [{
-            label: "Earnings",
+            label: "Faturamento",
             lineTension: 0.3,
             backgroundColor: "rgba(78, 115, 223, 0.05)",
             borderColor: "rgba(78, 115, 223, 1)",
@@ -128,7 +126,6 @@ function getFaturamentoGrafico() {
           }
         }
       });
-
 
     })
     .catch(error => {

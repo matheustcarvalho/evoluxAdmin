@@ -2,10 +2,21 @@ const express = require('express');
 const router = express.Router();
 const pagesController = require('./controllers/pagesController');
 const bodyParser = require('body-parser');
+var session = require('express-session')
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 router.use(bodyParser.json());
+
+router.use(session({
+  secret: 'jaodebarro',
+  resave: false,
+  saveUninitialized: true,
+  rolling: true,
+    cookie: {
+        maxAge: 60000 * 20,
+    }
+}))
 
 // Rotas GET
   //Pages
@@ -54,6 +65,7 @@ router.post('/baixar-conta-pagar', pagesController.baixarContaPagar);
 router.post('/edit-conta-receber', pagesController.editarContaReceber);
 router.post('/delete-conta-receber', pagesController.deleteContaReceber);  
 router.post('/baixar-conta-receber', pagesController.baixarContaReceber); 
+router.post('/login',pagesController.loginPost);
   
 module.exports = router;
  
