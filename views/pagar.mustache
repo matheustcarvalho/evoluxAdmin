@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Fornecedor</label>
                         <select class="form-control" name="idFornecedor" id="fornecedor">
-
+                            <option>--</option>
                         </select>
                     </div>
                     <div class="form-row">
@@ -26,7 +26,7 @@
                         <div class="form-group col-md-6">
                             <label for="exampleFormControlSelect1">Tipo</label>
                             <select class="form-control" name="idTipo" id="optionsTipo">
-
+                                <option value="">--</option>
                             </select>
                         </div>
                     </div>
@@ -67,10 +67,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="formContaEdit">
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Fornecedor</label>
-                        <select class="form-control" name="fornecedor" id="fornecedorEdit">
+                        <select class="form-control" name="idFornecedor" id="fornecedorEdit">
 
                         </select>
                     </div>
@@ -81,7 +81,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="exampleFormControlSelect1">Tipo</label>
-                            <select class="form-control" name="tipoDespesa" id="tipoDespesa">
+                            <select class="form-control" name="idTipo" id="tipoDespesa">
 
                             </select>
                         </div>
@@ -89,24 +89,25 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputAddress2">Vencimento</label>
-                            <input type="date" class="form-control" name="vencimento" id="vencimento">
+                            <input type="date" class="form-control" name="vencimento" id="vencimentoEdit">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="exampleFormControlSelect1">Pagamento Quitado?</label>
-                            <select class="form-control" name="statusPagamento" id="statusPagamento">
-                                <option>Não</option>
-                                <option>Sim</option>
+                            <select class="form-control" name="status" id="statusPagamentoEdit">
+                                <option value="A">Não</option>
+                                <option value="P">Sim</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Descrição</label>
-                        <textarea class="form-control" name="descricao" id="descricao" rows="3"></textarea>
+                        <textarea class="form-control" name="descricao" id="descricaoEdit" rows="3"></textarea>
+                        <input type="hidden" class="form-control" name="id" id="idConta">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Salvar</button>
+                <button type="submit" form="formContaEdit" class="btn btn-primary">Salvar</button>
             </div>
         </div>
     </div>
@@ -119,21 +120,21 @@
             aria-hidden="true"></i></button>
     <div class="collapse" id="collapseExample">
         <div class="card card-body">
-            <form>
+            <form id="formFiltro">
                 <div class="form-row">
                     <div class="form-group col-md-2">
                         <label for="inputCity">Vencimento (Início)</label>
-                        <input type="date" class="form-control" name="vencimentoInicio" id="vencimentoInicio">
+                        <input type="date" class="form-control" name="vencimentoIni" id="vencimentoInicio">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputZip">Vencimento (Fim)</label>
-                        <input type="date" class="form-control" id="vencimentoFim">
+                        <input type="date" class="form-control" name="vencimentoFim" id="vencimentoFim">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="exampleFormControlSelect1">Tipo</label>
                         <select class="form-control" name="tipo" id="tipo">
-                            <option>--</option>
-    
+                            <option value="">--</option>
+
                         </select>
                     </div>
                     <div class="form-group col-md-2">
@@ -147,12 +148,13 @@
                     <div class="form-group col-md-2">
                         <label for="inputState">Status</label>
                         <select id="inputState" name="status" id="status" class="form-control">
-                            <option selected>Em aberto</option>
-                            <option>Recebido</option>
+                            <option value="">--</option>
+                            <option value="A">Em aberto</option>
+                            <option value="P">Pago</option>
                         </select>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Filtrar</button>
+                <button type="submit" form="formFiltro" id="botaofiltro" class="btn btn-primary">Filtrar</button>
             </form>
         </div>
     </div>
@@ -223,10 +225,18 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Clique em "Excluir" para deletar os registros selecionados.</div>
+            <div class="modal-body delete-cliente">
+                <p class="nome-fornecedor"></p>
+                <p class="cnpj-fornecedor"></p>
+                <p class="vencimento-conta"></p>
+                <p class="valor-conta"></p>
+                <form id="deleteConta">
+                    <input type="hidden" class="form-control" name="id" id="idContaDelete" value="" required>
+                </form>
+            </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                <a class="btn btn-danger" >Excluir</a>
+                <button type="submit" form="deleteConta" class="btn btn-danger">Excluir</button>
             </div>
         </div>
     </div>
@@ -238,15 +248,25 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Atenção!</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tem certeza que deseja baixar?</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Clique em "Baixar" para dar baixa nos registros selecionados.</div>
+            <div class="modal-body">
+                <p class="nome-fornecedor"></p>
+                <p class="cnpj-fornecedor"></p>
+                <p class="vencimento-conta"></p>
+                <p class="valor-conta"></p>
+                <form id="baixarConta">
+                    <input type="hidden" class="form-control" name="id" id="idContaBaixar" value="" required>
+                    {{! <label for="inputZip"><b>Anexar Comprovante:</b></label>
+                    <input type="file" class="form-control-file" name="comprovante" id="comprovante"> }}
+                </form>
+            </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                <a class="btn btn-success" href="login.html">Baixar</a>
+                <button type="submit" form="baixarConta" class="btn btn-primary">Baixar</button>
             </div>
         </div>
     </div>
@@ -272,23 +292,45 @@
             }
 
         })
+    };
+
+    function limparInput() {
+
+        $('#fornecedor').val();
+        $('#valor').val();
+        $('#optionsTipo').val();
+        $('#vencimento').val();
+        $('#statusPagamentoEdit').val();
+        $('#status').val();
+        $('#descricao').val();
 
     }
 
-    function listContas() {
+    function listContas(filter = null) {
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: `/contas-pagar-list`,
+            data: filter,
             dataType: 'json',
             success: function (data) {
                 console.log(data)
+
+
                 let list = ''
                 for (contas of data) {
-                let data = contas.vencimento.split('T')[0]
-                  let dataForm = data.split('-');
-                  let dia = dataForm[2];
-                  let mes = dataForm[1];
-                  let ano = dataForm[0];
+                    let data = contas.vencimento.split('T')[0]
+                    let dataForm = data.split('-');
+                    let dia = dataForm[2];
+                    let mes = dataForm[1];
+                    let ano = dataForm[0];
+
+                    let divContent = '';
+                    if (contas.status == 'A') {
+                        divContent = `
+                            <a data-id="${contas.id}" data-cnpj="${contas.cnpj}" data-descricao="${contas.descricao}" data-fornecedor="${contas.fornecedor}" data-idFornecedor="${contas.idFornecedor}" data-idTipo="${contas.idTipo}" data-nomeTipo="${contas.nomeTipo}" data-status="${contas.status}" data-valor="${contas.valor}" data-vencimento="${contas.vencimento}" class="dropdown-item mb-1" data-toggle="modal" id="baixar" data-target="#baixaModal"><b>Dar baixa</b></a>
+                            <hr class="sidebar-divider my-0">
+                            `;
+                    }
 
                     list += `
                     <tr>
@@ -303,16 +345,21 @@
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
                                 </a>
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                                        <a data-id="${contas.id}" data-nome="${contas.nome}" data-cnpj="${contas.cpfcnpj}" data-estado="${contas.estado}" data-cidade="${contas.cidade}" data-bairro="${contas.bairro}" data-rua="${contas.rua}" data-numero="${contas.numero}" data-complemento="${contas.complemento}" data-telefone="${contas.telefone}" data-email="${contas.email}" class="dropdown-item mb-1" data-toggle="modal" id="editar" data-target="#Modal-editar"><b>Editar</b></a>
+                                        ${divContent}
+                                        <a data-id="${contas.id}" data-cnpj="${contas.cnpj}" data-descricao="${contas.descricao}" data-fornecedor="${contas.fornecedor}" data-idFornecedor="${contas.idFornecedor}" data-idTipo="${contas.idTipo}" data-nomeTipo="${contas.nomeTipo}"   data-status="${contas.status}" data-valor="${contas.valor}" data-vencimento="${contas.vencimento}" class="dropdown-item mb-1 mt-1" data-toggle="modal" id="editar" data-target="#Modal-editar"><b>Editar</b></a>
                                         <hr class="sidebar-divider my-0">
-                                        <a data-id-delete="${contas.id}" id="excluir" data-nome-delete="${contas.nome}" data-cnpj-delete="${contas.cpfcnpj}" class="dropdown-item mt-1" data-toggle="modal" style="color:#ff1212" data-target="#deletModal"><b>Excluir</b></a>
+                                        <a data-id-delete="${contas.id}" id="excluir" data-fornecedor="${contas.fornecedor}" data-cnpj="${contas.cnpj}" data-vencimento="${contas.vencimento}" data-valor="${contas.valor}" class="dropdown-item mt-1" data-toggle="modal" style="color:#ff1212" data-target="#deletModal"><b>Excluir</b></a>
                                     </div>
                             </div>
                         </td>
                     </tr>`
                 }
 
+                $("#contas").empty();
+
                 $("#contas").append(list)
+
+                limparInput();
 
             }
 
@@ -339,6 +386,17 @@
         })
     }
 
+    $('#formFiltro').on('submit', function (e) {
+        e.preventDefault();
+        let formData = new FormData($("#formFiltro").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        listContas(data)
+    });
 
     $('#formPagamento').on("submit", function (e) {
 
@@ -357,16 +415,168 @@
             data,
             success: function (response) {
                 alert('Salvo com sucesso!')
+                location.reload();
             }, error: function (e) {
                 console.log(e);
             }
 
         });
     });
-        
 
-    listTipos();
+    $('#formContaEdit').on("submit", function (e) {
+
+        e.preventDefault();
+        let formData = new FormData($("#formContaEdit").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        $.ajax({
+
+            url: '/edit-conta-pagar',
+            method: 'POST',
+            dataType: 'json',
+            data,
+            success: function (response) {
+                alert(response.message)
+                location.reload();
+            }, error: function (e) {
+                console.log(e);
+            }
+
+        });
+    });
+
+    $('#deleteConta').on("submit", function (e) {
+
+        e.preventDefault();
+        let formData = new FormData($("#deleteConta").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        $.ajax({
+
+            url: '/delete-conta-pagar',
+            method: 'POST',
+            dataType: 'json',
+            data,
+            success: function (response) {
+                alert(response.message)
+                location.reload();
+            }, error: function (e) {
+                console.log(e);
+            }
+
+        });
+    });
+
+    $('#baixarConta').on("submit", function (e) {
+
+        e.preventDefault();
+        let formData = new FormData($("#baixarConta").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        $.ajax({
+
+            url: '/baixar-conta-pagar',
+            method: 'POST',
+            dataType: 'json',
+            data,
+            success: function (response) {
+                alert(response.message)
+                location.reload();
+            }, error: function (e) {
+                console.log(e);
+            }
+
+        });
+    });
+
+    $("#contas").on('click', '#editar', function () {
+
+        let id = $(this).data('id');
+        let descricao = $(this).data('descricao');
+        let idFornecedor = $(this).data('idfornecedor');
+        let idTipo = $(this).data('idtipo');
+        let status = $(this).data('status');
+        let valor = $(this).data('valor');
+        let vencimento = $(this).data('vencimento');
+
+        $('#fornecedorEdit').val(idFornecedor);
+        $('#valorEdit').val(valor);
+        $('#tipoDespesa').val(idTipo);
+        $('#vencimentoEdit').val(vencimento.split('T')[0]);
+        $('#statusPagamentoEdit').val(status);
+        $('#descricaoEdit').val(descricao);
+        $('#idConta').val(id);
+
+    });
+
+    $("#contas").on('click', '#excluir', function () {
+
+        let fornecedor = $(this).data('fornecedor')
+        let cnpj = $(this).data('cnpj')
+        let valor = $(this).data('valor')
+        let vencimento = $(this).data('vencimento')
+        let idConta = $(this).data('id-delete')
+
+        let data = vencimento.split('T')[0]
+        let dataForm = data.split('-');
+        let dia = dataForm[2];
+        let mes = dataForm[1];
+        let ano = dataForm[0];
+
+        $('#idContaDelete').val(idConta);
+
+        $('.nome-fornecedor').html('<b>Fornecedor:</b> ' + fornecedor + '.');
+        $('.cnpj-fornecedor').html('<b>CNPJ:</b> ' + cnpj + '.');
+        $('.vencimento-conta').html('<b>Vencimento:</b> ' + dia + '/' + mes + '/' + ano + '.');
+        $('.valor-conta').html('<b>Valor:</b> ' + valor + '.');
+
+    });
+
+    $("#contas").on('click', '#baixar', function () {
+
+        let fornecedor = $(this).data('fornecedor')
+        let cnpj = $(this).data('cnpj')
+        let valor = $(this).data('valor')
+        let vencimento = $(this).data('vencimento')
+        let idConta = $(this).data('id')
+
+        let data = vencimento.split('T')[0]
+        let dataForm = data.split('-');
+        let dia = dataForm[2];
+        let mes = dataForm[1];
+        let ano = dataForm[0];
+
+        $('#idContaBaixar').val(idConta);
+
+        $('.nome-fornecedor').html('<b>Fornecedor:</b> ' + fornecedor + '.');
+        $('.cnpj-fornecedor').html('<b>CNPJ:</b> ' + cnpj + '.');
+        $('.vencimento-conta').html('<b>Vencimento:</b> ' + dia + '/' + mes + '/' + ano + '.');
+        $('.valor-conta').html('<b>Valor:</b> ' + valor + '.');
+
+    });
+
+    $('input[type="number"]').on('input', function () {
+        var inputValue = parseFloat($(this).val());
+
+        if (inputValue < 0) {
+            $(this).val(0);
+        }
+    });
+
     listFornecedores();
     listContas();
+    listTipos();
 </script>
 {{> partials/footer}}

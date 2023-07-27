@@ -26,7 +26,14 @@ router.get('/fornecedores-list', pagesController.fornecedoresList);
 router.get('/clientes-list', pagesController.clientesList);
 router.get('/tipos-pagamento-list', pagesController.tiposPagamengoList);
 router.get('/tipos-recebimento-list', pagesController.tiposRecebimentoList);
-router.get('/contas-pagar-list', pagesController.contasPagarList);
+router.post('/contas-pagar-list', pagesController.contasPagarList);
+router.post('/contas-receber-list', pagesController.contasReceberList);
+router.get('/valor-pagar-hoje', pagesController.valorPagarHojeList);
+router.get('/valor-receber-hoje', pagesController.valorReceberHojeList);
+router.get('/faturamento-mes', pagesController.faturamentoMesList);
+router.get('/despesa-mes', pagesController.despesaMesList);
+router.get('/despesa-grafico', pagesController.despesaGrafico);
+router.get('/faturamento-grafico', pagesController.faturamentoGrafico);
 
 //Rotas POST
 router.post('/novo-tipo-pagar', pagesController.adicionarTipoPagamento); 
@@ -40,7 +47,13 @@ router.post('/delete-fornecedor', pagesController.deleteFornecedor);
 router.post('/edit-cliente', pagesController.editarCliente); 
 router.post('/delete-cliente', pagesController.deleteCliente); 
 router.post('/delete-tipo-pagamento', pagesController.deleteTipoPagamento);
-router.post('/delete-tipo-recebimento', pagesController.deleteTipoRecebimento);   
+router.post('/delete-tipo-recebimento', pagesController.deleteTipoRecebimento);
+router.post('/edit-conta-pagar', pagesController.editarContaPagar);
+router.post('/delete-conta-pagar', pagesController.deleteContaPagar); 
+router.post('/baixar-conta-pagar', pagesController.baixarContaPagar);  
+router.post('/edit-conta-receber', pagesController.editarContaReceber);
+router.post('/delete-conta-receber', pagesController.deleteContaReceber);  
+router.post('/baixar-conta-receber', pagesController.baixarContaReceber); 
   
 module.exports = router;
  

@@ -1,1786 +1,582 @@
 {{> partials/header}}
-
-                <!-- End of Topbar ################################## -->
-                <!-- Modal -->
-                <div class="modal fade" id="Modal-cadastrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Novo Recebimento</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="formReceber">
-                                    <div class="form-group">
-                                        <label for="exampleFormControlSelect1">Cliente</label>
-                                        <select class="form-control" name="idCliente" id="idCliente">
-                                            <option value="1">1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="inputAddress2">Valor</label>
-                                            <input type="text" class="form-control" name="valor" id="valor">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="exampleFormControlSelect1">Tipo</label>
-                                            <select class="form-control" name="idTipo" id="idTipo">
-                                                <option value="1">Venda</option>
-                                                <option>Prestação de serviço</option>
-                                                <option>Outros</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="inputAddress2">Vencimento</label>
-                                            <input type="date" class="form-control" name="vencimento" id="vencimento">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="exampleFormControlSelect1">Recebido?</label>
-                                            <select class="form-control" name="status" id="status">
-                                                <option value="A">Não</option>
-                                                <option value="R">Sim</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Descrição</label>
-                                        <textarea class="form-control" name="descricao" id="descricao" rows="3"></textarea>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" form="formReceber" class="btn btn-primary">Salvar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Modal Editar -->
-                <div class="modal fade" id="Modal-editar" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Editar Registro
-
-                                </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="exampleFormControlSelect1">Fornecedor</label>
-                                        <select class="form-control" id="exampleFormControlSelect1">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="inputAddress2">Valor</label>
-                                            <input type="text" class="form-control" id="inputAddress2">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="exampleFormControlSelect1">Tipo</label>
-                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                <option>Água</option>
-                                                <option>Aluguel</option>
-                                                <option>Compras</option>
-                                                <option>Despesas</option>
-                                                <option>Energia elétrica</option>
-                                                <option>Funcionário</option>
-                                                <option>Imposto</option>
-                                                <option>Internet</option>
-                                                <option>Supermercado</option>
-                                                <option>Transportadora</option>
-                                                <option>Outros</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="inputAddress2">Vencimento</label>
-                                            <input type="date" class="form-control" id="inputAddress2">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="exampleFormControlSelect1">Pagamento Quitado?</label>
-                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                <option>Não</option>
-                                                <option>Sim</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Descrição</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1"
-                                            rows="3"></textarea>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary">Salvar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <button type="button" class="btn btn-secondary mb-2" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Filtros <i class="fa fa-filter" style="font-size: 14px;" aria-hidden="true"></i></button>
-                    <div class="collapse" id="collapseExample">
-                        <div class="card card-body">
-                            <form>
-                                <div class="form-row">
-                                  <div class="form-group col-md-2">
-                                    <label for="inputCity">Vencimento (Inicio)</label>
-                                    <input type="date" class="form-control" id="inputCity">
-                                  </div>
-                                  <div class="form-group col-md-2">
-                                    <label for="inputZip">Vencimento (Fim)</label>
-                                    <input type="date" class="form-control" id="inputZip">
-                                  </div>
-                                  <div class="form-group col-md-2">
-                                    <label for="exampleFormControlSelect1">Tipo</label>
-                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                <option>Venda</option>
-                                                <option>Prestação de serviço</option>
-                                                <option>Outros</option>
-                                            </select>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputZip">Valor(Min)</label>
-                                        <input type="number" class="form-control" id="inputZip">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputZip">Valor(Max)</label>
-                                        <input type="number" class="form-control" id="inputZip">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                      <label for="inputState">Status</label>
-                                      <select id="inputState" class="form-control">
-                                        <option selected>Em aberto</option>
-                                        <option >Recebido</option>
-                                      </select>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Filtrar</button>
-                            </form>
-                        </div>
-                      </div>
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-gradient-secondary"><b>Contas a Receber</b></h6>
-                            <button type="button" class="btn btn-secondary" data-toggle="modal" title="Adicionar Recebimento"
-                                data-target="#Modal-cadastrar">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                        <div class="row justify-content-end pr-3 mt-1">
-                            <a href="#" class="btn btn-danger btn-circle mx-1" title="Excluir" data-toggle="modal" data-target="#deletModal">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                            <a href="#" class="btn btn-success btn-circle mx-1" title="Dar baixa" data-toggle="modal" data-target="#baixaModal">
-                                <i class="fa fa-check-square" aria-hidden="true"></i>
-                            </a>
-                        </div>
-
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="">
-                                    <thead>
-                                        <tr>
-                                            <th>Fornecedor</th>
-                                            <th>CNPJ</th>
-                                            <th>Vencimento</th>
-                                            <th>Valor</th>
-                                            <th>Status</th>
-                                            <th class="text-center"></th>
-                                            <th class="text-center"></th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Fornecedor</th>
-                                            <th>CNPJ</th>
-                                            <th>Vencimento</th>
-                                            <th>Valor</th>
-                                            <th>Status</th>
-                                            <th class="text-center"></th>
-                                            <th class="text-center"></th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-
-                                            <td>2011/07/25</td>
-                                            <td>$170,750</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-
-                                            <td>2009/01/12</td>
-                                            <td>$86,000</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-
-                                            <td>2012/03/29</td>
-                                            <td>$433,060</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Airi Satou</td>
-                                            <td>Accountant</td>
-
-                                            <td>2008/11/28</td>
-                                            <td>$162,700</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brielle Williamson</td>
-                                            <td>Integration Specialist</td>
-
-                                            <td>2012/12/02</td>
-                                            <td>$372,000</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Herrod Chandler</td>
-                                            <td>Sales Assistant</td>
-
-                                            <td>2012/08/06</td>
-                                            <td>$137,500</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Rhona Davidson</td>
-                                            <td>Integration Specialist</td>
-
-                                            <td>2010/10/14</td>
-                                            <td>$327,900</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Colleen Hurst</td>
-                                            <td>Javascript Developer</td>
-
-                                            <td>2009/09/15</td>
-                                            <td>$205,500</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Sonya Frost</td>
-                                            <td>Software Engineer</td>
-
-                                            <td>2008/12/13</td>
-                                            <td>$103,600</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jena Gaines</td>
-                                            <td>Office Manager</td>
-
-                                            <td>2008/12/19</td>
-                                            <td>$90,560</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Quinn Flynn</td>
-                                            <td>Support Lead</td>
-
-                                            <td>2013/03/03</td>
-                                            <td>$342,000</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Charde Marshall</td>
-                                            <td>Regional Director</td>
-
-                                            <td>2008/10/16</td>
-                                            <td>$470,600</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Haley Kennedy</td>
-                                            <td>Senior Marketing Designer</td>
-
-                                            <td>2012/12/18</td>
-                                            <td>$313,500</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tatyana Fitzpatrick</td>
-                                            <td>Regional Director</td>
-
-                                            <td>2010/03/17</td>
-                                            <td>$385,750</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Michael Silva</td>
-                                            <td>Marketing Designer</td>
-
-                                            <td>2012/11/27</td>
-                                            <td>$198,500</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Paul Byrd</td>
-                                            <td>Chief Financial Officer (CFO)</td>
-
-                                            <td>2010/06/09</td>
-                                            <td>$725,000</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Gloria Little</td>
-                                            <td>Systems Administrator</td>
-
-                                            <td>2009/04/10</td>
-                                            <td>$237,500</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Bradley Greer</td>
-                                            <td>Software Engineer</td>
-
-                                            <td>2012/10/13</td>
-                                            <td>$132,000</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Dai Rios</td>
-                                            <td>Personnel Lead</td>
-
-                                            <td>2012/09/26</td>
-                                            <td>$217,500</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jenette Caldwell</td>
-                                            <td>Development Lead</td>
-
-                                            <td>2011/09/03</td>
-                                            <td>$345,000</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Yuri Berry</td>
-                                            <td>Chief Marketing Officer (CMO)</td>
-
-                                            <td>2009/06/25</td>
-                                            <td>$675,000</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Caesar Vance</td>
-                                            <td>Pre-Sales Support</td>
-
-                                            <td>2011/12/12</td>
-                                            <td>$106,450</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Doris Wilder</td>
-                                            <td>Sales Assistant</td>
-
-                                            <td>2010/09/20</td>
-                                            <td>$85,600</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Angelica Ramos</td>
-                                            <td>Chief Executive Officer (CEO)</td>
-
-                                            <td>2009/10/09</td>
-                                            <td>$1,200,000</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Gavin Joyce</td>
-                                            <td>Developer</td>
-
-                                            <td>2010/12/22</td>
-                                            <td>$92,575</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jennifer Chang</td>
-                                            <td>Regional Director</td>
-
-                                            <td>2010/11/14</td>
-                                            <td>$357,650</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brenden Wagner</td>
-                                            <td>Software Engineer</td>
-
-                                            <td>2011/06/07</td>
-                                            <td>$206,850</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Fiona Green</td>
-                                            <td>Chief Operating Officer (COO)</td>
-
-                                            <td>2010/03/11</td>
-                                            <td>$850,000</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Shou Itou</td>
-                                            <td>Regional Marketing</td>
-
-                                            <td>2011/08/14</td>
-                                            <td>$163,000</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Michelle House</td>
-                                            <td>Integration Specialist</td>
-
-                                            <td>2011/06/02</td>
-                                            <td>$95,400</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Suki Burks</td>
-                                            <td>Developer</td>
-
-                                            <td>2009/10/22</td>
-                                            <td>$114,500</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Prescott Bartlett</td>
-                                            <td>Technical Author</td>
-
-                                            <td>2011/05/07</td>
-                                            <td>$145,000</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Gavin Cortez</td>
-                                            <td>Team Leader</td>
-
-                                            <td>2008/10/26</td>
-                                            <td>$235,500</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Martena Mccray</td>
-                                            <td>Post-Sales support</td>
-
-                                            <td>2011/03/09</td>
-                                            <td>$324,050</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Unity Butler</td>
-                                            <td>Marketing Designer</td>
-
-                                            <td>2009/12/09</td>
-                                            <td>$85,675</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Howard Hatfield</td>
-                                            <td>Office Manager</td>
-
-                                            <td>2008/12/16</td>
-                                            <td>$164,500</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Hope Fuentes</td>
-                                            <td>Secretary</td>
-
-                                            <td>2010/02/12</td>
-                                            <td>$109,850</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Vivian Harrell</td>
-                                            <td>Financial Controller</td>
-
-                                            <td>2009/02/14</td>
-                                            <td>$452,500</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Timothy Mooney</td>
-                                            <td>Office Manager</td>
-
-                                            <td>2008/12/11</td>
-                                            <td>$136,200</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jackson Bradshaw</td>
-                                            <td>Director</td>
-
-                                            <td>2008/09/26</td>
-                                            <td>$645,750</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Olivia Liang</td>
-                                            <td>Support Engineer</td>
-
-                                            <td>2011/02/03</td>
-                                            <td>$234,500</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Bruno Nash</td>
-                                            <td>Software Engineer</td>
-
-                                            <td>2011/05/03</td>
-                                            <td>$163,500</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Sakura Yamamoto</td>
-                                            <td>Support Engineer</td>
-
-                                            <td>2009/08/19</td>
-                                            <td>$139,575</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Thor Walton</td>
-                                            <td>Developer</td>
-
-                                            <td>2013/08/11</td>
-                                            <td>$98,540</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Finn Camacho</td>
-                                            <td>Support Engineer</td>
-
-                                            <td>2009/07/07</td>
-                                            <td>$87,500</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Serge Baldwin</td>
-                                            <td>Data Coordinator</td>
-
-                                            <td>2012/04/09</td>
-                                            <td>$138,575</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Zenaida Frank</td>
-                                            <td>Software Engineer</td>
-
-                                            <td>2010/01/04</td>
-                                            <td>$125,250</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Zorita Serrano</td>
-                                            <td>Software Engineer</td>
-
-                                            <td>2012/06/01</td>
-                                            <td>$115,000</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jennifer Acosta</td>
-                                            <td>Junior Javascript Developer</td>
-
-                                            <td>2013/02/01</td>
-                                            <td>$75,650</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cara Stevens</td>
-                                            <td>Sales Assistant</td>
-
-                                            <td>2011/12/06</td>
-                                            <td>$145,600</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Hermione Butler</td>
-                                            <td>Regional Director</td>
-
-                                            <td>2011/03/21</td>
-                                            <td>$356,250</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lael Greer</td>
-                                            <td>Systems Administrator</td>
-
-                                            <td>2009/02/27</td>
-                                            <td>$103,500</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jonas Alexander</td>
-                                            <td>Developer</td>
-
-                                            <td>2010/07/14</td>
-                                            <td>$86,500</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Shad Decker</td>
-                                            <td>Regional Director</td>
-
-                                            <td>2008/11/13</td>
-                                            <td>$183,000</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Michael Bruce</td>
-                                            <td>Javascript Developer</td>
-
-                                            <td>2011/06/27</td>
-                                            <td>$183,000</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Donna Snider</td>
-                                            <td>Customer Support</td>
-
-                                            <td>2011/01/25</td>
-                                            <td>$112,000</td>
-                                            <td>Em aberto</td>
-                                            <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                        aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" data-toggle="modal"  data-target="#Modal-editar"><b>Editar</b></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- /.container-fluid-->
-
+<!-- End of Topbar ################################## -->
+<!-- Modal -->
+<div class="modal fade" id="Modal-cadastrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Novo Recebimento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <div class="modal-body">
+                <form id="formRecebimento">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Cliente</label>
+                        <select class="form-control" name="idCliente" id="cliente">
+                            <option>--</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputAddress2">Valor</label>
+                            <input type="text" class="form-control" name="valor" id="valor">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="exampleFormControlSelect1">Tipo</label>
+                            <select class="form-control" name="idTipo" id="optionsTipo">
+                                <option value="">--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputAddress2">Vencimento</label>
+                            <input type="date" class="form-control" name="vencimento" id="vencimento">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="exampleFormControlSelect1">Recebido?</label>
+                            <select class="form-control" name="status" id="status">
+                                <option value="A">Não</option>
+                                <option value="R">Sim</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Descrição</label>
+                        <textarea class="form-control" name="descricao" id="descricao" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="formRecebimento" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-            <!-- Delete Modal-->
+<!-- Modal Editar -->
+<div class="modal fade" id="Modal-editar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Recebimento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formContaEdit">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Cliente</label>
+                        <select class="form-control" name="idCliente" id="clienteEdit">
+
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputAddress2">Valor</label>
+                            <input type="text" class="form-control" name="valor" id="valorEdit">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="exampleFormControlSelect1">Tipo</label>
+                            <select class="form-control" name="idTipo" id="tipoDespesa">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputAddress2">Vencimento</label>
+                            <input type="date" class="form-control" name="vencimento" id="vencimentoEdit">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="exampleFormControlSelect1">Recebido?</label>
+                            <select class="form-control" name="status" id="statusRecebimentoEdit">
+                                <option value="A">Não</option>
+                                <option value="R">Sim</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Descrição</label>
+                        <textarea class="form-control" name="descricao" id="descricaoEdit" rows="3"></textarea>
+                        <input type="hidden" class="form-control" name="id" id="idConta">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="formContaEdit" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <button type="button" class="btn btn-secondary mb-2" data-toggle="collapse" data-target="#collapseExample"
+        aria-expanded="false" aria-controls="collapseExample">Filtros <i class="fa fa-filter" style="font-size: 14px;"
+            aria-hidden="true"></i></button>
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+            <form id="formFiltro">
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="inputCity">Vencimento (Início)</label>
+                        <input type="date" class="form-control" name="vencimentoIni" id="vencimentoInicio">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputZip">Vencimento (Fim)</label>
+                        <input type="date" class="form-control" name="vencimentoFim" id="vencimentoFim">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="exampleFormControlSelect1">Tipo</label>
+                        <select class="form-control" name="tipo" id="tipo">
+                            <option value="">--</option>
+
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputZip">Valor (Min)</label>
+                        <input type="number" class="form-control" name="valorMin" id="valorMin">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputZip">Valor (Max)</label>
+                        <input type="number" class="form-control" name="valorMax" id="valorMax">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputState">Status</label>
+                        <select id="inputState" name="status" id="status" class="form-control">
+                            <option value="">--</option>
+                            <option value="A">Em aberto</option>
+                            <option value="R">Pago</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" form="formFiltro" id="botaofiltro" class="btn btn-primary">Filtrar</button>
+            </form>
+        </div>
+    </div>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-gradient-secondary"><b>Contas a Receber</b></h6>
+            <button type="button" class="btn btn-secondary" data-toggle="modal" title="Adicionar Recebimento"
+                data-target="#Modal-cadastrar">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+        {{! <div class="row justify-content-end pr-3 mt-1">
+            <a href="#" class="btn btn-danger btn-circle mx-1" title="Excluir" data-toggle="modal"
+                data-target="#deletModal">
+                <i class="fas fa-trash"></i>
+            </a>
+            <a href="#" class="btn btn-success btn-circle mx-1" title="Dar baixa" data-toggle="modal"
+                data-target="#baixaModal">
+                <i class="fa fa-check-square" aria-hidden="true"></i>
+            </a>
+        </div> }}
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>CPF/CNPJ</th>
+                            <th>Vencimento</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>CPF/CNPJ</th>
+                            <th>Vencimento</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th class="text-center"></th>
+                        </tr>
+                    </tfoot>
+                    <tbody id="contas">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid-->
+
+</div>
+
+<!-- Delete Modal-->
 <div class="modal fade" id="deletModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-<div class="modal-content">
-    <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tem certeza que deseja excluir?</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tem certeza que deseja excluir?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body delete-cliente">
+                <p class="nome-cliente"></p>
+                <p class="cnpj-cliente"></p>
+                <p class="vencimento-conta"></p>
+                <p class="valor-conta"></p>
+                <form id="deleteConta">
+                    <input type="hidden" class="form-control" name="id" id="idContaDelete" value="" required>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                <button type="submit" form="deleteConta" class="btn btn-danger">Excluir</button>
+            </div>
+        </div>
     </div>
-    <div class="modal-body">Clique em "Excluir" para deletar os registros selecionados.</div>
-    <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-        <a class="btn btn-danger" href="login.html">Excluir</a>
-    </div>
-</div>
-</div>
 </div>
 
 <!-- Baixar Modal-->
 <div class="modal fade" id="baixaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-<div class="modal-content">
-    <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Atenção!</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tem certeza que deseja baixar?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="nome-cliente"></p>
+                <p class="cnpj-cliente"></p>
+                <p class="vencimento-conta"></p>
+                <p class="valor-conta"></p>
+                <form id="baixarConta">
+                    <input type="hidden" class="form-control" name="id" id="idContaBaixar" value="" required>
+                    {{! <label for="inputZip"><b>Anexar Comprovante:</b></label>
+                    <input type="file" class="form-control-file" name="comprovante" id="comprovante"> }}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                <button type="submit" form="baixarConta" class="btn btn-primary">Baixar</button>
+            </div>
+        </div>
     </div>
-    <div class="modal-body">Clique em "Baixar" para dar baixa nos registros selecionados.</div>
-    <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-        <a class="btn btn-success" href="login.html">Baixar</a>
-    </div>
-</div>
-</div>
 </div>
 
 <script>
-$('#formReceber').on("submit", function (e) {
+    function listTipos() {
+        $.ajax({
+            type: 'GET',
+            url: `/tipos-recebimento-list`,
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+                let list = ''
+                for (options of data) {
 
-e.preventDefault();
-let formData = new FormData($("#formReceber").get(0));
+                    list += ` <option value="${options.id}">${options.descricao}</option>`
+                }
 
-const data = {};
-formData.forEach((val, key) => {
-    data[key] = val;
-});
+                $("#optionsTipo").append(list)
+                $("#tipo").append(list)
+                $("#tipoDespesa").append(list)
+            }
 
-$.ajax({
-    url: '/nova-conta-receber',
-    method: 'POST',
-    dataType: 'json',
-    data,
-    success: function (response) {
-        alert('Salvo com sucesso!')
-    }, error: function (e) {
-        console.log(e);
+        })
+    };
+
+    function limparInput() {
+
+        $('#cliente').val();
+        $('#valor').val();
+        $('#optionsTipo').val();
+        $('#vencimento').val();
+        $('#statusRecebimentoEdit').val();
+        $('#status').val();
+        $('#descricao').val();
+
     }
 
-});
-});
-</script>
+    function listContas(filter = null) {
+        $.ajax({
+            type: 'POST',
+            url: `/contas-receber-list`,
+            data: filter,
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
 
+
+                let list = ''
+                for (contas of data) {
+                    let data = contas.vencimento.split('T')[0]
+                    let dataForm = data.split('-');
+                    let dia = dataForm[2];
+                    let mes = dataForm[1];
+                    let ano = dataForm[0];
+
+                    let divContent = '';
+                    if (contas.status == 'A') {
+                        divContent = `
+                            <a data-id="${contas.id}" data-cnpj="${contas.cpfcnpj}" data-descricao="${contas.descricao}" data-cliente="${contas.cliente}" data-idCliente="${contas.idCliente}" data-idTipo="${contas.idTipo}" data-nomeTipo="${contas.nomeTipo}" data-status="${contas.status}" data-valor="${contas.valor}" data-vencimento="${contas.vencimento}" class="dropdown-item mb-1" data-toggle="modal" id="baixar" data-target="#baixaModal"><b>Dar baixa</b></a>
+                            <hr class="sidebar-divider my-0">
+                            `;
+                    }
+
+                    list += `
+                    <tr>
+                        <td>${contas.cliente}</td>
+                        <td>${contas.cpfcnpj}</td>
+                        <td>${dia}/${mes}/${ano}</td>
+                        <td>${contas.valor}</td>
+                        <td>${contas.status == 'A' ? 'Em aberto' : 'Pago'}</td>
+                        <td class="text-center">
+                            <div class="dropdown no-arrow">
+                                <a data-id-check="${contas.id}" class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
+                                </a>
+                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                        ${divContent}
+                                        <a data-id="${contas.id}" data-cnpj="${contas.cpfcnpj}" data-descricao="${contas.descricao}" data-cliente="${contas.cliente}" data-idCliente="${contas.idCliente}" data-idTipo="${contas.idTipo}" data-nomeTipo="${contas.nomeTipo}"   data-status="${contas.status}" data-valor="${contas.valor}" data-vencimento="${contas.vencimento}" class="dropdown-item mb-1 mt-1" data-toggle="modal" id="editar" data-target="#Modal-editar"><b>Editar</b></a>
+                                        <hr class="sidebar-divider my-0">
+                                        <a data-id-delete="${contas.id}" id="excluir" data-cliente="${contas.cliente}" data-cnpj="${contas.cpfcnpj}" data-vencimento="${contas.vencimento}" data-valor="${contas.valor}" class="dropdown-item mt-1" data-toggle="modal" style="color:#ff1212" data-target="#deletModal"><b>Excluir</b></a>
+                                    </div>
+                            </div>
+                        </td>
+                    </tr>`
+                }
+
+                $("#contas").empty();
+
+                $("#contas").append(list)
+
+                limparInput();
+
+            }
+
+        })
+    }
+
+    function listClientes() {
+        $.ajax({
+            type: 'GET',
+            url: `/clientes-list`,
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+                let list = ''
+                for (options of data) {
+
+                    list += ` <option value="${options.id}">${options.nome}</option>`
+                }
+
+                $("#cliente").append(list)
+                $("#clienteEdit").append(list)
+            }
+
+        })
+    }
+
+    $('#formFiltro').on('submit', function (e) {
+        e.preventDefault();
+        let formData = new FormData($("#formFiltro").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        listContas(data)
+    });
+
+    $('#formRecebimento').on("submit", function (e) {
+
+        e.preventDefault();
+        let formData = new FormData($("#formRecebimento").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        $.ajax({
+            url: '/nova-conta-receber',
+            method: 'POST',
+            dataType: 'json',
+            data,
+            success: function (response) {
+                alert('Salvo com sucesso!')
+                location.reload();
+            }, error: function (e) {
+                console.log(e);
+            }
+
+        });
+    });
+
+    $('#formContaEdit').on("submit", function (e) {
+
+        e.preventDefault();
+        let formData = new FormData($("#formContaEdit").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        $.ajax({
+
+            url: '/edit-conta-receber',
+            method: 'POST',
+            dataType: 'json',
+            data,
+            success: function (response) {
+                alert(response.message)
+                location.reload();
+            }, error: function (e) {
+                console.log(e);
+            }
+
+        });
+    });
+
+    $('#deleteConta').on("submit", function (e) {
+
+        e.preventDefault();
+        let formData = new FormData($("#deleteConta").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        $.ajax({
+
+            url: '/delete-conta-receber',
+            method: 'POST',
+            dataType: 'json',
+            data,
+            success: function (response) {
+                alert(response.message)
+                location.reload();
+            }, error: function (e) {
+                console.log(e);
+            }
+
+        });
+    });
+
+    $('#baixarConta').on("submit", function (e) {
+
+        e.preventDefault();
+        let formData = new FormData($("#baixarConta").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        $.ajax({
+
+            url: '/baixar-conta-receber',
+            method: 'POST',
+            dataType: 'json',
+            data,
+            success: function (response) {
+                alert(response.message)
+                location.reload();
+            }, error: function (e) {
+                console.log(e);
+            }
+
+        });
+    });
+
+    $("#contas").on('click', '#editar', function () {
+
+        let id = $(this).data('id');
+        let descricao = $(this).data('descricao');
+        let idCliente = $(this).data('idcliente');
+        let idTipo = $(this).data('idtipo');
+        let status = $(this).data('status');
+        let valor = $(this).data('valor');
+        let vencimento = $(this).data('vencimento');
+
+        $('#clienteEdit').val(idCliente);
+        $('#valorEdit').val(valor);
+        $('#tipoDespesa').val(idTipo);
+        $('#vencimentoEdit').val(vencimento.split('T')[0]);
+        $('#statusRecebimentoEdit').val(status);
+        $('#descricaoEdit').val(descricao);
+        $('#idConta').val(id);
+
+    });
+
+    $("#contas").on('click', '#excluir', function () {
+
+        let cliente = $(this).data('cliente')
+        let cnpj = $(this).data('cnpj')
+        let valor = $(this).data('valor')
+        let vencimento = $(this).data('vencimento')
+        let idConta = $(this).data('id-delete')
+
+        let data = vencimento.split('T')[0]
+        let dataForm = data.split('-');
+        let dia = dataForm[2];
+        let mes = dataForm[1];
+        let ano = dataForm[0];
+
+        $('#idContaDelete').val(idConta);
+
+        $('.nome-cliente').html('<b>Cliente:</b> ' + cliente + '.');
+        $('.cnpj-cliente').html('<b>CPF/CNPJ:</b> ' + cnpj + '.');
+        $('.vencimento-conta').html('<b>Vencimento:</b> ' + dia + '/' + mes + '/' + ano + '.');
+        $('.valor-conta').html('<b>Valor:</b> ' + valor + '.');
+
+    });
+
+    $("#contas").on('click', '#baixar', function () {
+
+        let cliente = $(this).data('cliente')
+        let cnpj = $(this).data('cnpj')
+        let valor = $(this).data('valor')
+        let vencimento = $(this).data('vencimento')
+        let idConta = $(this).data('id')
+
+        let data = vencimento.split('T')[0]
+        let dataForm = data.split('-');
+        let dia = dataForm[2];
+        let mes = dataForm[1];
+        let ano = dataForm[0];
+
+        $('#idContaBaixar').val(idConta);
+
+        $('.nome-cliente').html('<b>Cliente:</b> ' + cliente + '.');
+        $('.cnpj-cliente').html('<b>CPF/CNPJ:</b> ' + cnpj + '.');
+        $('.vencimento-conta').html('<b>Vencimento:</b> ' + dia + '/' + mes + '/' + ano + '.');
+        $('.valor-conta').html('<b>Valor:</b> ' + valor + '.');
+
+    });
+
+    $('input[type="number"]').on('input', function () {
+        var inputValue = parseFloat($(this).val());
+
+        if (inputValue < 0) {
+            $(this).val(0);
+        }
+    });
+
+    listClientes();
+    listContas();
+    listTipos();
+</script>
 {{> partials/footer}}
