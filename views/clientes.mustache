@@ -23,13 +23,17 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-md-6 mb-3">
-                            <label for="validationDefault02">Estado</label>
-                            <input type="text" class="form-control" name="estado" id="estado" required>
+                        <div class="form-group col-md-6">
+                            <label for="exampleFormControlSelect1">Estado</label>
+                            <select class="form-control" name="estado" id="estado">
+
+                            </select>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="validationDefault01">Cidade</label>
-                            <input type="text" class="form-control" name="cidade" id="cidade" required>
+                        <div class="form-group col-md-6">
+                            <label for="exampleFormControlSelect1">Cidade</label>
+                            <select class="form-control" name="cidade" id="cidade">
+
+                            </select>
                         </div>
                     </div>
                     <div class="form-row">
@@ -96,13 +100,17 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-md-6 mb-3">
-                            <label for="validationDefault02">Estado</label>
-                            <input type="text" name="estado" class="form-control" id="estadoEdit" required>
+                        <div class="form-group col-md-6">
+                            <label for="exampleFormControlSelect1">Estado</label>
+                            <select class="form-control" name="estado" id="estadoEdit">
+
+                            </select>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="validationDefault01">Cidade</label>
-                            <input type="text" class="form-control" name="cidade" id="cidadeEdit" required>
+                        <div class="form-group col-md-6">
+                            <label for="exampleFormControlSelect1">Cidade</label>
+                            <select class="form-control" name="cidade" id="cidadeEdit">
+
+                            </select>
                         </div>
                     </div>
                     <div class="form-row">
@@ -256,21 +264,21 @@
                         <td>${clientes.cidade}-${clientes.estado}</td>
                         <td>${clientes.telefone}</td>
                         <td class="text-center">
-                            <div class="dropdown no-arrow">
+                            <div class="dropdown no-arrow" id="dropdown-edit" data-id="${clientes.id}" data-nome="${clientes.nome}" data-cnpj="${clientes.cpfcnpj}" data-estado="${clientes.estado}" data-cidade="${clientes.cidade}" data-bairro="${clientes.bairro}" data-rua="${clientes.rua}" data-numero="${clientes.numero}" data-complemento="${clientes.complemento}" data-telefone="${clientes.telefone}" data-email="${clientes.email}" >
                                 <a data-id-check="${clientes.id}" class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-black-400"></i>
                                 </a>
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                                        <a data-id="${clientes.id}" data-nome="${clientes.nome}" data-cnpj="${clientes.cpfcnpj}" data-estado="${clientes.estado}" data-cidade="${clientes.cidade}" data-bairro="${clientes.bairro}" data-rua="${clientes.rua}" data-numero="${clientes.numero}" data-complemento="${clientes.complemento}" data-telefone="${clientes.telefone}" data-email="${clientes.email}" class="dropdown-item mb-1" data-toggle="modal" id="editar" data-target="#Modal-editar"><b>Editar</b></a>
+                                        <a data-id="${clientes.id}" data-nome="${clientes.nome}" data-cnpj="${clientes.cpfcnpj}" data-estado="${clientes.estado}" data-cidade="${clientes.cidade}" data-bairro="${clientes.bairro}" data-rua="${clientes.rua}" data-numero="${clientes.numero}" data-complemento="${clientes.complemento}" data-telefone="${clientes.telefone}" data-email="${clientes.email}" class="dropdown-item mb-1" data-toggle="modal" id="editar" data-target="#Modal-editar"><i class='fas fa-pen' style='font-size:13px'></i><b>  Editar</b></a>
                                         <hr class="sidebar-divider my-0">
-                                        <a data-id-delete="${clientes.id}" id="excluir" data-nome-delete="${clientes.nome}" data-cnpj-delete="${clientes.cpfcnpj}" class="dropdown-item mt-1" data-toggle="modal" style="color:#ff1212" data-target="#deletModal"><b>Excluir</b></a>
+                                        <a data-id-delete="${clientes.id}" id="excluir" data-nome-delete="${clientes.nome}" data-cnpj-delete="${clientes.cpfcnpj}" class="dropdown-item mt-1" data-toggle="modal" style="color:#ff1212" data-target="#deletModal"><i class='fas fa-trash' style='font-size:13px'></i> <b>Excluir</b></a>
                                     </div>
                             </div>
                         </td>
                     </tr>`
                 }
 
-                $("#clientes").append(list)
+                $("#clientes").html(list)
 
             }
 
@@ -354,33 +362,34 @@
         });
     });
 
-    $("#clientes").on('click', '#editar', function () {
+        $("#clientes").on('click', '#dropdown-edit', function () {
+    
+            let nome = $(this).data('nome')
+            let cnpj = $(this).data('cnpj')
+            let estado = $(this).data('estado')
+            let cidade = $(this).data('cidade')
+            let bairro = $(this).data('bairro')
+            let rua = $(this).data('rua')
+            let numero = $(this).data('numero')
+            let complemento = $(this).data('complemento')
+            let telefone = $(this).data('telefone')
+            let email = $(this).data('email')
+            let idCliente = $(this).data('id')
+    
+            $('#nomeEdit').val(nome);
+            $('#cnpjEdit').val(cnpj);
+            $('#estadoEdit').val(estado).trigger('change');
+            $('#cidadeEdit').val(cidade);
+            $('#bairroEdit').val(bairro);
+            $('#ruaEdit').val(rua);
+            $('#numeroEdit').val(numero);
+            $('#complementoEdit').val(complemento);
+            $('#telefoneEdit').val(telefone);
+            $('#emailEdit').val(email);
+            $('#idClienteEdit').val(idCliente);
+    
+        });
 
-        let nome = $(this).data('nome')
-        let cnpj = $(this).data('cnpj')
-        let estado = $(this).data('estado')
-        let cidade = $(this).data('cidade')
-        let bairro = $(this).data('bairro')
-        let rua = $(this).data('rua')
-        let numero = $(this).data('numero')
-        let complemento = $(this).data('complemento')
-        let telefone = $(this).data('telefone')
-        let email = $(this).data('email')
-        let idCliente = $(this).data('id')
-
-        $('#nomeEdit').val(nome);
-        $('#cnpjEdit').val(cnpj);
-        $('#estadoEdit').val(estado);
-        $('#cidadeEdit').val(cidade);
-        $('#bairroEdit').val(bairro);
-        $('#ruaEdit').val(rua);
-        $('#numeroEdit').val(numero);
-        $('#complementoEdit').val(complemento);
-        $('#telefoneEdit').val(telefone);
-        $('#emailEdit').val(email);
-        $('#idClienteEdit').val(idCliente);
-
-    });
 
     $("#clientes").on('click', '#excluir', function () {
 
@@ -395,6 +404,68 @@
 
     });
 
+
+    function carregarEstados() {
+        $.ajax({
+            url: 'https://servicodados.ibge.gov.br/api/v1/localidades/estados',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                data.sort((a, b) => a.nome.localeCompare(b.nome));
+
+                $('#estado').empty();
+                $('#estado').append('<option value="">Selecione um estado</option>');
+                $('#estadoEdit').append('<option value="">Selecione um estado</option>');
+                data.forEach(function (estado) {
+                    $('#estado').append('<option value="' + estado.sigla + '">' + estado.nome + '</option>');
+                    $('#estadoEdit').append('<option value="' + estado.sigla + '">' + estado.nome + '</option>');
+                });
+            }
+        });
+    }
+
+    function carregarCidades(estadoSigla) {
+        $.ajax({
+            url: 'https://servicodados.ibge.gov.br/api/v1/localidades/estados/' + estadoSigla + '/municipios',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $('#cidade').empty();
+                $('#cidadeEdit').empty();
+
+                data.forEach(function (cidade) {
+                    $('#cidade').append('<option value="' + cidade.nome + '">' + cidade.nome + '</option>');
+                    $('#cidadeEdit').append('<option value="' + cidade.nome + '">' + cidade.nome + '</option>');
+                });
+
+            }
+        });
+    }
+
+    carregarEstados();
+
+    $('#estado').change(function () {
+        var estadoSelecionado = $(this).val();
+        if (estadoSelecionado) {
+            carregarCidades(estadoSelecionado);
+        } else {
+
+            $('#cidade').empty();
+            $('#cidade').append('<option value="">Selecione um estado</option>');
+        }
+    });
+
+    $('#estadoEdit').change(function () {
+        var estadoSelecionado = $(this).val();
+        if (estadoSelecionado) {
+            carregarCidades(estadoSelecionado);
+
+        } else {
+            $('#cidadeEdit').empty();
+            $('#cidadeEdit').append('<option value="">Selecione um estado</option>');
+        }
+    });
+
     listClientes();
 </script>
-{{> partials/footer}}
+{{> partials/footer}} 

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pagesController = require('./controllers/pagesController');
+const loginController = require('./controllers/loginController');
 const bodyParser = require('body-parser');
 var session = require('express-session')
 
@@ -65,7 +66,12 @@ router.post('/baixar-conta-pagar', pagesController.baixarContaPagar);
 router.post('/edit-conta-receber', pagesController.editarContaReceber);
 router.post('/delete-conta-receber', pagesController.deleteContaReceber);  
 router.post('/baixar-conta-receber', pagesController.baixarContaReceber); 
-router.post('/login',pagesController.loginPost);
+
+//LOGIN
+
+router.post('/loginn', loginController.login); 
+router.post('/registrar', loginController.register); 
+
   
 module.exports = router;
  

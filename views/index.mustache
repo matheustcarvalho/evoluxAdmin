@@ -155,6 +155,9 @@
                 var valorEmReaisFormatado = data[0].valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
                 $('#valorPagar').html('R$' + valorEmReaisFormatado);
 
+            },
+            error: function (error) {
+                console.error(error);
             }
 
         })
@@ -170,6 +173,9 @@
                 var valorEmReaisFormatado = data[0].valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
                 $('#valorReceber').html('R$' + valorEmReaisFormatado);
 
+            },
+            error: function (error) {
+                console.error(error);
             }
 
         })
@@ -200,6 +206,9 @@
                 var valorEmReaisFormatado = data[0].valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
                 $('#despesaMes').html('R$' + valorEmReaisFormatado);
 
+            },
+            error: function (error) {
+                console.error(error);
             }
 
         })

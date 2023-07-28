@@ -1,8 +1,6 @@
 const connection = require('../db');
 const service = require('../service/service');
-const loginService = require('../service/login');
 const bcrypt = require('bcrypt');
-
 
 //GET
 const index = (req, res) => {
@@ -94,7 +92,6 @@ let status = req.body.status;
       res.status(500).json({ error: err });
     } else {
       res.json(users)
-      console.log(users)
     }
   });
 };
@@ -112,7 +109,6 @@ const contasReceberList = (req, res) => {
         res.status(500).json({ error: err });
       } else {
         res.json(users)
-        console.log(users)
       }
     });
   };
@@ -214,6 +210,7 @@ const adicionarTipoRecebimento = (req, res) => {
 
 const adicionarFornecedor = (req, res) => {
   const userData = req.body;
+  userData.status = "A"
   console.log(userData)
 
   service.adicionarFornecedor(userData, (err, result) => {
@@ -227,6 +224,7 @@ const adicionarFornecedor = (req, res) => {
 
 const adicionarCliente = (req, res) => {
   const userData = req.body;
+  userData.status= 'A';
   console.log(userData)
 
   service.adicionarCliente(userData, (err, result) => {
