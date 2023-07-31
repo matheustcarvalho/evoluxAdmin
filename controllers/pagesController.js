@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt');
 
 //GET
 const index = (req, res) => {
-      res.render('index'); 
+  res.render('index'); 
+      console.log(req.session)
 };
 
 const pagar = (req, res) => {
@@ -33,6 +34,7 @@ const tipoRecebimento = (req, res) => {
 
 const login = (req, res) => {
   res.render('login');
+  console.log(req.session)
 };
 
 const cadastro = (req, res) => {

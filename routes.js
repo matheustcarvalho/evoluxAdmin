@@ -10,7 +10,7 @@ router.use(express.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
 router.use(session({
-  secret: 'jaodebarro',
+  secret: 'Ev0lux!',
   resave: false,
   saveUninitialized: true,
   rolling: true,
@@ -20,15 +20,20 @@ router.use(session({
 }))
 
 // Rotas GET
-  //Pages
-router.get('/', pagesController.index);
+//Pages
+router.get('/',pagesController.login);
+router.post('/', loginController.login); 
+
+// Middleware para verificar a validade da sessão
+router.use(loginController.requireAuthentication);
+// Rotas GET
+router.get('/home', pagesController.index);
 router.get('/pagar', pagesController.pagar);
 router.get('/receber',pagesController.receber);
 router.get('/fornecedores',pagesController.fornecedores);
 router.get('/clientes',pagesController.clientes);
 router.get('/tipo-pagamento',pagesController.tipoPagamento);
 router.get('/tipo-recebimento',pagesController.tipoRecebimento);
-router.get('/login',pagesController.login);
 router.get('/cadastro',pagesController.cadastro);
 router.get('/404', (req, res) => {
   res.render('404'); 
@@ -69,8 +74,8 @@ router.post('/baixar-conta-receber', pagesController.baixarContaReceber);
 
 //LOGIN
 
-router.post('/loginn', loginController.login); 
 router.post('/registrar', loginController.register); 
+router.post('/logout', loginController.logout);
 
   
 module.exports = router;

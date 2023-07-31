@@ -1,64 +1,105 @@
 const connection = require('../db');
 const service = require('../service/service');
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
-
 
 const login = async (req, res) => {
+    const { email, senha } = req.body;
 
-    const { username, password } = req.body;
+    console.log(req.body);
 
     try {
-        // Aqui você obteria a senha criptografada armazenada no banco de dados para o usuário com o nome de usuário fornecido
-        // (Lembre-se de que em uma aplicação real, você precisaria buscar essas informações no banco de dados)
+        const query = 'SELECT * FROM empresas WHERE email = ?';
+        connection.query(query, [email], async (err, results) => {
+            if (err) {
+                console.error('Erro na consulta:', err);
+                res.status(500).render('login', { status: 'error', message: 'Erro ao buscar usuário.' });
+                return;
+            }
 
-        // Para fins de demonstração, estou usando uma senha criptografada hardcoded
-        const hashedPasswordFromDB = '$2b$10$Xv4czxK9OkKGo0Ltzp6adOQD18LJJQhm0pKwT0mu6nwtbb2S64HzO';
+            if (results.length === 0) {
+                res.status(404).render('login', { status: 'error', message: 'Email não encontrado.' });
+                return;
+            }
 
-        // Verificar a senha fornecida pelo usuário com a senha criptografada do banco de dados
-        const isPasswordValid = await bcrypt.compare(password, hashedPasswordFromDB);
+            const user = results[0];
+            const isPasswordValid = await bcrypt.compare(senha, user.senha);
 
-        if (isPasswordValid) {
-            // A senha está correta, portanto, você pode permitir o login do usuário
-            req.session.username = username;
-            res.redirect('/dashboard');
-        } else {
-            // A senha está incorreta
-            res.send('Credenciais inválidas. Tente novamente.');
-        }
+            if (isPasswordValid) {
+                req.session.user = {
+                    id: user.id,
+                    email: user.email,
+                    nome: user.nome,
+                };
+
+                res.redirect('/home');
+            } else {
+                res.status(401).render('login', { status: 'error', message: 'Senha incorreta.' });
+            }
+        });
     } catch (err) {
         console.error('Erro no login:', err);
-        res.status(500).send('Erro ao fazer login.');
+        res.status(500).render('login', { status: 'error', message: 'Erro ao fazer login.' });
     }
-
 };
+
 
 
 const register = async (req, res) => {
-    const { username, password } = req.body;
+    const { senha } = req.body;
 
     try {
-        // Gerar um salt (uma sequência aleatória para adicionar à senha)
+        const saltRounds = 10;
+
         const salt = await bcrypt.genSalt(saltRounds);
+        const hashedPassword = await bcrypt.hash(senha, salt);
 
-        // Criptografar a senha usando o salt
-        const hashedPassword = await bcrypt.hash(password, salt);
+        const userData = {
+            ...req.body,
+            senha: hashedPassword
+        };
 
-        // Salvar o nome de usuário e a senha criptografada no banco de dados
-        // (Lembre-se de que em uma aplicação real, você precisaria armazenar essas informações em um banco de dados)
-        console.log('Nome de usuário:', username);
-        console.log('Senha criptografada:', hashedPassword);
-
-        res.send('Usuário registrado com sucesso!');
+        const query = 'INSERT INTO empresas SET ?';
+        connection.query(query, userData, (err, result) => {
+            if (err) {
+                console.error('Erro na inserção:', err);
+                res.status(500).json({ error: err });
+            } else {
+                res.status(201).json({ message: 'Fornecedor adicionado com sucesso!' });
+                console.log('Salvo')
+            }
+        });
     } catch (err) {
-        console.error('Erro no registro:', err);
-        res.status(500).send('Erro ao registrar o usuário.');
+        console.error('Erro na criptografia da senha:', err);
+        res.status(500).send('Erro ao criptografar a senha.');
     }
-
 };
+
+// Middleware de autenticação
+const requireAuthentication = (req, res, next) => {
+
+    if (req.session && req.session.user && req.session.user.id) {
+        next();
+    } else {
+        res.redirect('/');
+    }
+};
+
+const logout = (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Erro ao fazer logout:', err);
+            res.status(500).send('Erro ao fazer logout.');
+        } else {
+            res.redirect('/');
+        }
+    });
+};
+
 
 module.exports = {
     login,
-    register
-  
-  };
+    register,
+    requireAuthentication,
+    logout
+
+};

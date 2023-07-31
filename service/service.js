@@ -1,9 +1,16 @@
 const connection = require('../db');
+const mysql = require('mysql2');
+
 
 
 const adicionarTipoPagamento = (userData, callback) => {
-  const query = 'INSERT INTO tipoPagamento SET ?';
-  connection.query(query, userData, (err, result) => {
+  const query = 'INSERT INTO tipoPagamento SET ' +
+                '`descricao`=' + mysql.escape(userData.descricao) + ',' +
+                '`idEmpresa`=' + mysql.escape(userData.idEmpresa) + ',' +
+                '`registro`=' + mysql.escape(userData.registro.toISOString()) + ',' +
+                '`status`=' + mysql.escape(userData.status);
+
+  connection.query(query, (err, result) => {
     if (err) {
       console.error('Erro na inserção:', err);
       callback('Erro ao adicionar', null);

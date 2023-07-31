@@ -1,6 +1,7 @@
 {{> partials/header}}
 <!-- End of Topbar ################################## -->
 <!-- Modal -->
+
 <div class="container-fluid">
 
     <!-- Content Row -->
@@ -53,9 +54,9 @@
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="faturamentoMes">R$00,00</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="faturamentoMes">R$00,00
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="col-auto">
@@ -169,7 +170,7 @@
             url: `/valor-receber-hoje`,
             dataType: 'json',
             success: function (data) {
-                
+
                 var valorEmReaisFormatado = data[0].valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
                 $('#valorReceber').html('R$' + valorEmReaisFormatado);
 
@@ -187,7 +188,7 @@
             url: `/faturamento-mes`,
             dataType: 'json',
             success: function (data) {
-                
+
                 var valorEmReaisFormatado = data[0].valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
                 $('#faturamentoMes').html('R$' + valorEmReaisFormatado);
 
@@ -202,7 +203,7 @@
             url: `/despesa-mes`,
             dataType: 'json',
             success: function (data) {
-                
+
                 var valorEmReaisFormatado = data[0].valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
                 $('#despesaMes').html('R$' + valorEmReaisFormatado);
 
@@ -218,5 +219,21 @@
     valorReceber();
     faturamentoMes();
     despesaMes();
+
+
 </script>
+<script src="vendor/jquery/jquery.min.js"></script>
+<!-- <script src="vendor/jquery/jquery.min.js"></script> -->
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin-2.js"></script>
+<script src="vendor/chart.js/Chart.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="js/demo/chart-area-demo.js"></script>
+<script src="js/demo/chart-pie-demo.js"></script>
 {{> partials/footer}}

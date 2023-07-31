@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Sistema Evolux</title>
+    <title>Evolux Admin</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -21,64 +21,71 @@
 </head>
 
 <body class="bg-gradient-secondary">
+
     <div class="container">
+
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Cadastrar Novo Cliente!</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Cadastrar</h1>
                             </div>
-                            <form class="user">
+                            <form id="formCadastro" class="user">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="Razão Social">
+                                        <input type="text" name="nome" class="form-control" placeholder="Razão Social">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                            placeholder="CNPJ">
+                                        <input type="text" class="form-control" name="cnpj" placeholder="CNPJ" id="cnpjInput">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="Estado">
+                                        <select class="form-control" name="estado" id="estado">
+
+                                        </select>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                            placeholder="Cidade">
+                                        <select class="form-control" name="cidade" id="cidade">
+
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="Rua">
+                                        <input type="text" class="form-control" name="bairro" placeholder="Bairro">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                            placeholder="Numero">
+                                        <input type="text" class="form-control" name="rua" placeholder="Rua">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                            placeholder="Email">
+                                        <input type="text" class="form-control" name="numero" placeholder="Numero">
                                     </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="cepInput" name="cep" placeholder="CEP">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" name="email" placeholder="Email">
+                                </div>
+                                <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Password">
+                                        <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Telefone">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control" name="senha" placeholder="Senha">
                                     </div>
                                 </div>
-                                <div class="row justify-content-center">
-                                    <div class="col-lg-6">
-                                        <a href="login.html" class="btn btn-primary btn-user btn-block">
-                                            <b>Registrar</b>
-                                        </a>
-                                    </div>
-                                </div>
+                                <button type="submit" form="formCadastro" class="btn btn-primary btn-user btn-block">
+                                    Cadastrar
+                                </button>
+                                <hr>
                             </form>
                         </div>
                     </div>
@@ -86,6 +93,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -95,8 +103,110 @@
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+    <!-- Inclua a biblioteca inputmask -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6-beta.8/jquery.inputmask.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6-beta.8/inputmask/jquery.inputmask.min.js"></script>
+
 
 </body>
 
 </html>
+
+<script>
+    $('#formCadastro').on("submit", function (e) {
+
+        e.preventDefault();
+        let formData = new FormData($("#formCadastro").get(0));
+
+        const data = {};
+        formData.forEach((val, key) => {
+            data[key] = val;
+        });
+
+        $.ajax({
+            url: '/registrar',
+            method: 'POST',
+            dataType: 'json',
+            data,
+            success: function (response) {
+                Swal.fire({
+                    title: response.message,
+                    icon: 'success',
+                    showConfirmButton: false,
+                    titleFontSize: '15px'
+                })
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
+            }, error: function (e) {
+                console.log(e);
+            }
+
+        });
+    });
+
+    $('#cnpjInput').inputmask('99.999.999/9999-99');
+    $('#cepInput').inputmask('99999-999');
+    $('#telefone').inputmask('(99) 99999-9999');
+
+    $('#moneyInput').inputmask('currency', {
+        prefix: 'R$ ', // Prefixo para indicar a moeda (Real)
+        radixPoint: ',', // Ponto decimal
+        groupSeparator: '.', // Separador de milhares
+        allowMinus: false, // Permitir valores negativos (true) ou não (false)
+        digits: 2, // Número de casas decimais
+        autoGroup: true, // Formatar automaticamente enquanto o usuário digita
+        rightAlign: false, // Alinhar à direita
+        unmaskAsNumber: true, // Retornar apenas o número ao obter o valor do campo
+    });
+
+
+    function carregarEstados() {
+        $.ajax({
+            url: 'https://servicodados.ibge.gov.br/api/v1/localidades/estados',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                data.sort((a, b) => a.nome.localeCompare(b.nome));
+                const $estado = $('#estado');
+                $estado.empty();
+                let list = '';
+                for (const estado of data) {
+                    list += `<option value="${estado.sigla}">${estado.nome}</option>`;
+                }
+                $estado.append(list);
+            }
+        });
+    }
+
+    function carregarCidades(estadoSigla) {
+        $.ajax({
+            url: `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoSigla}/municipios`,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                const $cidade = $('#cidade');
+                $cidade.empty();
+                let list = '';
+                for (const cidade of data) {
+                    list += `<option value="${cidade.nome}">${cidade.nome}</option>`;
+                }
+                $cidade.append(list);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        carregarEstados();
+        $('#estado').change(function () {
+            const estadoSelecionado = $(this).val();
+            if (estadoSelecionado) {
+                carregarCidades(estadoSelecionado);
+            } else {
+                $('#cidade').empty().append('<option value="">Selecione uma cidade</option>');
+            }
+        });
+    });
+</script>

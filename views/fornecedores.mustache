@@ -295,8 +295,15 @@
             dataType: 'json',
             data,
             success: function (response) {
-                alert('Salvo com sucesso!')
-                listFornecedores();
+                Swal.fire({
+                    title: response.message,
+                    icon: 'success',
+                    showConfirmButton: false,
+                    titleFontSize: '15px'
+                })
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
             }, error: function (e) {
                 console.log(e);
             }
@@ -321,8 +328,17 @@
             dataType: 'json',
             data,
             success: function (response) {
-                alert(response.message)
-                location.reload();
+
+                Swal.fire({
+                    title: response.message,
+                    icon: 'success',
+                    showConfirmButton: false,
+                    titleFontSize: '15px'
+                })
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
+
             }, error: function (e) {
                 console.log(e);
             }
@@ -347,8 +363,15 @@
             dataType: 'json',
             data,
             success: function (response) {
-                alert(response.message)
-                location.reload();
+                Swal.fire({
+                    title: response.message,
+                    icon: 'success',
+                    showConfirmButton: false,
+                    titleFontSize: '15px'
+                })
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
             }, error: function (e) {
                 console.log(e);
             }
@@ -411,31 +434,45 @@
             success: function (data) {
                 data.sort((a, b) => a.nome.localeCompare(b.nome));
 
-                $('#estado').empty();
-                $('#estado').append('<option value="">Selecione um estado</option>');
-                $('#estadoEdit').append('<option value="">Selecione um estado</option>');
-                data.forEach(function (estado) {
-                    $('#estado').append('<option value="' + estado.sigla + '">' + estado.nome + '</option>');
-                    $('#estadoEdit').append('<option value="' + estado.sigla + '">' + estado.nome + '</option>');
-                });
+                const $estado = $('#estado');
+                const $estadoEdit = $('#estadoEdit');
+
+                $estado.empty();
+                $estadoEdit.empty();
+
+                let list = '';
+                for (const estado of data) {
+                    list += `<option value="${estado.sigla}">${estado.nome}</option>`;
+                }
+
+                $estado.append('<option value="">Selecione um estado</option>');
+                $estadoEdit.append('<option value="">Selecione um estado</option>');
+
+                $estado.append(list);
+                $estadoEdit.append(list);
             }
         });
     }
 
     function carregarCidades(estadoSigla) {
         $.ajax({
-            url: 'https://servicodados.ibge.gov.br/api/v1/localidades/estados/' + estadoSigla + '/municipios',
+            url: `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoSigla}/municipios`,
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-                $('#cidade').empty();
-                $('#cidadeEdit').empty();
+                const $cidade = $('#cidade');
+                const $cidadeEdit = $('#cidadeEdit');
 
-                data.forEach(function (cidade) {
-                    $('#cidade').append('<option value="' + cidade.nome + '">' + cidade.nome + '</option>');
-                    $('#cidadeEdit').append('<option value="' + cidade.nome + '">' + cidade.nome + '</option>');
-                });
+                $cidade.empty();
+                // $cidadeEdit.empty();
 
+                let list = '';
+                for (const cidade of data) {
+                    list += `<option value="${cidade.nome}">${cidade.nome}</option>`;
+                }
+
+                $cidade.append(list);
+                $cidadeEdit.html(list);
             }
         });
     }
@@ -443,27 +480,43 @@
     carregarEstados();
 
     $('#estado').change(function () {
-        estadoSelecionado = $(this).val();
+        const estadoSelecionado = $(this).val();
         if (estadoSelecionado) {
             carregarCidades(estadoSelecionado);
         } else {
-
-            $('#cidade').empty();
-            $('#cidade').append('<option value="">Selecione um estado</option>'); 
+            $('#cidade').empty().append('<option value="">Selecione um estado</option>');
         }
     });
 
     $('#estadoEdit').change(function () {
-        var estadoSelecionado = $(this).val();
+        const estadoSelecionado = $(this).val();
         if (estadoSelecionado) {
             carregarCidades(estadoSelecionado);
-
         } else {
-            $('#cidadeEdit').empty();
-            $('#cidadeEdit').append('<option value="">Selecione um estado</option>');
+            $('#cidadeEdit').empty().append('<option value="">Selecione um estado</option>');
         }
     });
 
+    $('#telefone').inputmask('(99) 99999-9999');
+    $('#telefoneEdit').inputmask('(99) 99999-9999');
+    $('#cnpj').inputmask('99.999.999/9999-99');
+    $('#cnpjEdit').inputmask('99.999.999/9999-99');
+
     listFornecedores();
 </script>
+
+<script src="vendor/jquery/jquery.min.js"></script>
+ <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+ <script src="vendor/jquery-easing/jquery.easing.min.js"></script> 
+
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin-2.js"></script>
+
+<!-- Page level plugins -->
+<script src="vendor/datatables/jquery.dataTables.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="js/demo/datatables-demo.js"></script>
 {{> partials/footer}}
