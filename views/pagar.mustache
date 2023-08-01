@@ -162,11 +162,16 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-gradient-secondary"><b>Contas a Pagar</b></h6>
-            <button type="button" class="btn btn-secondary" data-toggle="modal" title="Adicionar Pagamento"
-                data-target="#Modal-cadastrar">
-                <i class="fas fa-plus"></i>
-            </button>
+            <div class="d-flex">
+                <button type="button" class="btn btn-secondary" data-toggle="modal" title="Baixar relatório" data-target="#Modal-cadastrar">
+                    <i class="fas fa-download"></i>
+                </button>
+                <button type="button" class="btn btn-secondary ml-3" data-toggle="modal" title="Adicionar Pagamento" data-target="#Modal-cadastrar">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
         </div>
+        
 
         <div class="card-body">
             <div class="table-responsive">
@@ -359,6 +364,20 @@
         })
     }
 
+    function listContasCSV(filter = null) {
+        $.ajax({
+            type: 'POST',
+            url: `/contas-pagar-csv`,
+            data: filter,
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+
+            }
+
+        })
+    }
+
     function listFornecedores() {
         $.ajax({
             type: 'GET',
@@ -392,6 +411,7 @@
         });
 
         listContas(data)
+        listContasCSV(data)
     });
 
     $('#formPagamento').on("submit", function (e) {

@@ -404,9 +404,12 @@
         let email = $(this).data('email')
         let idFornecedor = $(this).data('id')
 
+        carregarCidades(estado);
+
         $('#nomeEdit').val(nome);
         $('#cnpjEdit').val(cnpj);
-        $('#estadoEdit').val(estado).trigger('change');
+        $('#estadoEdit').val(estado);
+        $('#estadoEdit option[value="' + estado + '"]').prop('selected', true);
         $('#cidadeEdit').val(cidade);
         $('#bairroEdit').val(bairro);
         $('#ruaEdit').val(rua);
@@ -415,6 +418,7 @@
         $('#telefoneEdit').val(telefone);
         $('#emailEdit').val(email);
         $('#idFornecedorEdit').val(idFornecedor);
+
 
     });
 
@@ -506,11 +510,11 @@
 </script>
 
 <script src="vendor/jquery/jquery.min.js"></script>
- <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
+<!-- <script src="vendor/jquery/jquery.min.js"></script> -->
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
- <script src="vendor/jquery-easing/jquery.easing.min.js"></script> 
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.js"></script>

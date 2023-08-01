@@ -1,22 +1,14 @@
 const connection = require('../db');
-const mysql = require('mysql2');
-
-
 
 const adicionarTipoPagamento = (userData, callback) => {
-  const query = 'INSERT INTO tipoPagamento SET ' +
-                '`descricao`=' + mysql.escape(userData.descricao) + ',' +
-                '`idEmpresa`=' + mysql.escape(userData.idEmpresa) + ',' +
-                '`registro`=' + mysql.escape(userData.registro.toISOString()) + ',' +
-                '`status`=' + mysql.escape(userData.status);
-
-  connection.query(query, (err, result) => {
+  const query = 'INSERT INTO tipoPagamento SET ?';
+  connection.query(query, userData, (err, result) => {
     if (err) {
       console.error('Erro na inserção:', err);
       callback('Erro ao adicionar', null);
     } else {
       callback(null, result);
-      console.log('salvo com sucesso')
+      console.log('salvo com sucesso');
     }
   });
 };
@@ -88,9 +80,9 @@ const adicionarContaReceber = (userData, callback) => {
   });
 };
 
-const getFornecedores = (callback) => {
+const getFornecedores = (id, callback) => {
   //STATUS A = ATIVO, I = INATIVO
-  const query = 'SELECT * FROM fornecedores WHERE status = "A" ';
+  const query = `SELECT * FROM fornecedores WHERE status = "A" and idEmpresa = ${id}`;
   connection.query(query, (err, rows) => {
     if (err) {
       console.error('Erro na consulta:', err);
@@ -127,9 +119,9 @@ const deleteFornecedor = (idFornecedor, userData, callback) => {
   });
 };
 
-const getClientes = (callback) => {
+const getClientes = (id, callback) => {
   //STATUS A = ATIVO, I = INATIVO
-  const query = 'SELECT * FROM clientes WHERE status = "A" ';
+  const query = `SELECT * FROM clientes WHERE status = "A" and idEmpresa = ${id} `;
   connection.query(query, (err, rows) => {
     if (err) {
       console.error('Erro na consulta:', err);
@@ -166,9 +158,9 @@ const deleteCliente = (idCliente, userData, callback) => {
   });
 };
 
-const getTiposPagamento = (callback) => {
+const getTiposPagamento = (id, callback) => {
   //STATUS A = ATIVO, I = INATIVO
-  const query = 'SELECT * FROM tipoPagamento WHERE status = "A" ';
+  const query = `SELECT * FROM tipoPagamento WHERE status = "A" and idEmpresa = ${id} `;
   connection.query(query, (err, rows) => {
     if (err) {
       console.error('Erro na consulta:', err);
@@ -192,9 +184,9 @@ const deleteTipoPagamento = (idTipo, userData, callback) => {
   });
 };
 
-const getTiposRecebimento = (callback) => {
+const getTiposRecebimento = (id,callback) => {
   //STATUS A = ATIVO, I = INATIVO
-  const query = 'SELECT * FROM tipoRecebimento WHERE status = "A" ';
+  const query = `SELECT * FROM tipoRecebimento WHERE status = "A" and idEmpresa = ${id} `;
   connection.query(query, (err, rows) => {
     if (err) {
       console.error('Erro na consulta:', err);
@@ -218,14 +210,14 @@ const deleteTipoRecebimento = (idTipo, userData, callback) => {
   });
 };
 
-const getContasPagar = (vencimentoIni, vencimentoFim, tipo, valorMin, valorMax, status, callback) => {
+const getContasPagar = (id, vencimentoIni, vencimentoFim, tipo, valorMin, valorMax, status, callback) => {
 
   let query = `SELECT c.id, f.nome as fornecedor, f.id as idFornecedor, f.cnpj, c.vencimento, c.valor ,
    c.status, c.descricao, c.idTipo, t.descricao as nomeTipo
     FROM evolux.contasPagar as c
       JOIN fornecedores as f on f.id = c.idFornecedor
       JOIN tipoPagamento as t on t.id = c.idTipo
-    WHERE c.status not in ('D')`;
+    WHERE c.status not in ('D') and c.idEmpresa = ${id}`;
 
   if (tipo) {
     query += ` AND c.idTipo = ${parseInt(tipo)}`;
@@ -261,14 +253,14 @@ const getContasPagar = (vencimentoIni, vencimentoFim, tipo, valorMin, valorMax, 
   });
 };
 
-const getContasReceber = (vencimentoIni, vencimentoFim, tipo, valorMin, valorMax, status, callback) => {
+const getContasReceber = (id, vencimentoIni, vencimentoFim, tipo, valorMin, valorMax, status, callback) => {
 
   let query = `SELECT c.id, f.nome as cliente, f.id as idCliente, f.cpfcnpj, c.vencimento, c.valor ,
    c.status, c.descricao, c.idTipo, t.descricao as nomeTipo
     FROM evolux.contasReceber as c
       JOIN clientes as f on f.id = c.idCliente
       JOIN tipoPagamento as t on t.id = c.idTipo
-    WHERE c.status not in ('D')`;
+    WHERE c.status not in ('D') and c.idEmpresa = ${id}`;
 
   if (tipo) {
     query += ` AND c.idTipo = ${parseInt(tipo)}`;
@@ -382,11 +374,11 @@ const baixarContaReceber = (idConta, userData, callback) => {
   });
 };
 
-const getValorPagarHoje = (callback) => {
+const getValorPagarHoje = (id, callback) => {
   //STATUS A = ATIVO, I = INATIVO
   const query = `SELECT SUM(valor) as valor FROM evolux.contasPagar
   where vencimento = curdate()
-  and status = 'A';`;
+  and status = 'A' and idEmpresa = ${id}`;
   connection.query(query, (err, rows) => {
     if (err) {
       console.error('Erro na consulta:', err);
@@ -397,10 +389,10 @@ const getValorPagarHoje = (callback) => {
   });
 };
 
-const getValorReceberHoje = (callback) => {
+const getValorReceberHoje = (id, callback) => {
   const query = `SELECT SUM(valor) as valor FROM evolux.contasReceber
   where vencimento = curdate()
-  and status = 'A';`;
+  and status = 'A' and idEmpresa = ${id}`;
   connection.query(query, (err, rows) => {
     if (err) {
       console.error('Erro na consulta:', err);
@@ -411,12 +403,12 @@ const getValorReceberHoje = (callback) => {
   });
 };
 
-const getFaturamentoMes = (callback) => {
+const getFaturamentoMes = (id, callback) => {
   const query = `SELECT sum(valor) as valor
   FROM contasReceber
-  WHERE MONTH(vencimento) = MONTH(CURRENT_DATE)
-    AND YEAR(vencimento) = YEAR(CURRENT_DATE)
-    AND status = 'R'`;
+  WHERE MONTH(baixa) = MONTH(CURRENT_DATE)
+    AND YEAR(baixa) = YEAR(CURRENT_DATE)
+    AND status = 'R' and idEmpresa = ${id}`;
   connection.query(query, (err, rows) => {
     if (err) {
       console.error('Erro na consulta:', err);
@@ -427,12 +419,12 @@ const getFaturamentoMes = (callback) => {
   });
 };
 
-const getDespesaMes = (callback) => {
+const getDespesaMes = (id,callback) => {
   const query = `SELECT sum(valor) as valor
   FROM contasPagar
-  WHERE MONTH(vencimento) = MONTH(CURRENT_DATE)
-    AND YEAR(vencimento) = YEAR(CURRENT_DATE)
-    AND status = 'P'`;
+  WHERE MONTH(baixa) = MONTH(CURRENT_DATE)
+    AND YEAR(baixa) = YEAR(CURRENT_DATE)
+    AND status = 'P' and idEmpresa = ${id}`;
   connection.query(query, (err, rows) => {
     if (err) {
       console.error('Erro na consulta:', err);
@@ -443,13 +435,13 @@ const getDespesaMes = (callback) => {
   });
 };
 
-const getDespesaGrafico = (callback) => {
+const getDespesaGrafico = (id, callback) => {
   const query = `SELECT
     SUM(CASE WHEN status = 'A' THEN valor ELSE 0 END) AS aberto,
     SUM(CASE WHEN status = 'D' THEN valor ELSE 0 END) AS cancelado,
     SUM(CASE WHEN status = 'P' THEN valor ELSE 0 END) AS pago
     FROM evolux.contasPagar
-    WHERE MONTH(vencimento) = MONTH(CURRENT_DATE()) AND YEAR(vencimento) = YEAR(CURRENT_DATE())`;
+    WHERE MONTH(vencimento) = MONTH(CURRENT_DATE()) AND YEAR(vencimento) = YEAR(CURRENT_DATE()) and idEmpresa = ${id}`;
   connection.query(query, (err, rows) => {
     if (err) {
       console.error('Erro na consulta:', err);
@@ -460,7 +452,7 @@ const getDespesaGrafico = (callback) => {
   });
 };
 
-const getFaturamentoGrafico = (callback) => {
+const getFaturamentoGrafico = (id,callback) => {
   const query = `SELECT
       CONCAT(
           CASE EXTRACT(MONTH FROM baixa)
@@ -486,6 +478,7 @@ const getFaturamentoGrafico = (callback) => {
     WHERE
       status = 'R' AND
       baixa BETWEEN DATE_SUB(CURDATE(), INTERVAL 1 YEAR) AND LAST_DAY(CURDATE())
+      AND idEmpresa = ${id}
     GROUP BY
       EXTRACT(MONTH FROM baixa),
       EXTRACT(YEAR FROM baixa)
@@ -503,8 +496,6 @@ const getFaturamentoGrafico = (callback) => {
     }
   });
 };
-
-
 
 module.exports = {
   getFornecedores,

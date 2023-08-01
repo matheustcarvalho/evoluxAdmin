@@ -42,8 +42,6 @@ const login = async (req, res) => {
     }
 };
 
-
-
 const register = async (req, res) => {
     const { senha } = req.body;
 
@@ -94,7 +92,6 @@ const logout = (req, res) => {
         }
     });
 };
-
 
 module.exports = {
     login,

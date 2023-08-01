@@ -547,6 +547,11 @@ pre code {
   overflow-y: scroll;
 }
 
+.login-div{
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
 .container,
 .container-fluid,
 .container-sm,
