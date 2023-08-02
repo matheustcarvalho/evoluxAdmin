@@ -3,7 +3,9 @@ const router = express.Router();
 const pagesController = require('./controllers/pagesController');
 const loginController = require('./controllers/loginController');
 const bodyParser = require('body-parser');
-var session = require('express-session')
+var session = require('express-session');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
@@ -53,6 +55,7 @@ router.get('/despesa-grafico', pagesController.despesaGrafico);
 router.get('/faturamento-grafico', pagesController.faturamentoGrafico);
 router.get('/pagar-CSV', pagesController.contasPagarCSV);
 router.get('/receber-CSV', pagesController.contasReceberCSV);
+router.get('/download/:filename/:extensao', pagesController.downloadComprovante);
 
 //Rotas POST
 router.post('/novo-tipo-pagar', pagesController.adicionarTipoPagamento); 
@@ -69,10 +72,10 @@ router.post('/delete-tipo-pagamento', pagesController.deleteTipoPagamento);
 router.post('/delete-tipo-recebimento', pagesController.deleteTipoRecebimento);
 router.post('/edit-conta-pagar', pagesController.editarContaPagar);
 router.post('/delete-conta-pagar', pagesController.deleteContaPagar); 
-router.post('/baixar-conta-pagar', pagesController.baixarContaPagar);  
+router.post('/baixar-conta-pagar', upload.single('fileInput'), pagesController.baixarContaPagar);  
 router.post('/edit-conta-receber', pagesController.editarContaReceber);
 router.post('/delete-conta-receber', pagesController.deleteContaReceber);  
-router.post('/baixar-conta-receber', pagesController.baixarContaReceber); 
+router.post('/baixar-conta-receber', upload.single('fileInput'), pagesController.baixarContaReceber);  
 
 //LOGIN
 

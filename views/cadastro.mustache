@@ -82,10 +82,18 @@
                                         <input type="password" class="form-control" name="senha" placeholder="Senha">
                                     </div>
                                 </div>
-                                <button type="submit" form="formCadastro" class="btn btn-primary btn-user btn-block">
-                                    Cadastrar
-                                </button>
-                                <hr>
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <a type="button" href="/home" class="btn btn-secondary btn-user btn-block">
+                                            Voltar 
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <button type="submit" form="formCadastro" class="btn btn-primary btn-user btn-block">
+                                            Cadastrar
+                                        </button>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -172,7 +180,7 @@
                 data.sort((a, b) => a.nome.localeCompare(b.nome));
                 const $estado = $('#estado');
                 $estado.empty();
-                let list = '';
+                let list = '<option value="">Selecione um estado</option>';
                 for (const estado of data) {
                     list += `<option value="${estado.sigla}">${estado.nome}</option>`;
                 }
@@ -205,7 +213,7 @@
             if (estadoSelecionado) {
                 carregarCidades(estadoSelecionado);
             } else {
-                $('#cidade').empty().append('<option value="">Selecione uma cidade</option>');
+                $('#cidade').empty().append('<option value=""></option>');
             }
         });
     });

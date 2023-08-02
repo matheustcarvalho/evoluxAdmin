@@ -64,7 +64,6 @@
                         <div class="col-md-6 mb-3">
                             <label for="validationDefault02">Email</label>
                             <input type="text" class="form-control" name="email" id="email" required>
-                            <input type="hidden" class="form-control" name="idEmpresa" id="idEmpresa" required>
                         </div>
                     </div>
                 </form>
@@ -269,6 +268,8 @@
                 }
 
                 $("#fornecedores").html(list)
+
+                $('#dataTable').DataTable();
 
             },
             error: function (error) {
@@ -505,7 +506,7 @@
     $('#telefoneEdit').inputmask('(99) 99999-9999');
     $('#cnpj').inputmask('99.999.999/9999-99');
     $('#cnpjEdit').inputmask('99.999.999/9999-99');
-
+ 
     listFornecedores();
 </script>
 
@@ -522,5 +523,5 @@
 <!-- Page level plugins -->
 <script src="vendor/datatables/jquery.dataTables.js"></script>
 <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="js/demo/datatables-demo.js"></script>
+
 {{> partials/footer}}

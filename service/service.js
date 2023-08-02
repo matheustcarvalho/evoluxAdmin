@@ -213,7 +213,7 @@ const deleteTipoRecebimento = (idTipo, userData, callback) => {
 const getContasPagar = (id, vencimentoIni, vencimentoFim, tipo, valorMin, valorMax, status, callback) => {
 
   let query = `SELECT c.id, f.nome as fornecedor, f.id as idFornecedor, f.cnpj, c.vencimento, c.valor ,
-   c.status, c.descricao, c.idTipo, t.descricao as nomeTipo
+   c.status, c.descricao, c.idTipo, t.descricao as nomeTipo, c.comprovante, c.extensao
     FROM evolux.contasPagar as c
       JOIN fornecedores as f on f.id = c.idFornecedor
       JOIN tipoPagamento as t on t.id = c.idTipo
@@ -256,7 +256,7 @@ const getContasPagar = (id, vencimentoIni, vencimentoFim, tipo, valorMin, valorM
 const getContasReceber = (id, vencimentoIni, vencimentoFim, tipo, valorMin, valorMax, status, callback) => {
 
   let query = `SELECT c.id, f.nome as cliente, f.id as idCliente, f.cpfcnpj, c.vencimento, c.valor ,
-   c.status, c.descricao, c.idTipo, t.descricao as nomeTipo
+   c.status, c.descricao, c.idTipo, t.descricao as nomeTipo, c.comprovante, c.extensao
     FROM evolux.contasReceber as c
       JOIN clientes as f on f.id = c.idCliente
       JOIN tipoPagamento as t on t.id = c.idTipo

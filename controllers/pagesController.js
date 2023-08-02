@@ -5,43 +5,45 @@ const json2csv = require('json2csv').parse;
 const fs = require('fs');
 const { format } = require('date-fns');
 const path = require('path');
-
+const multer = require('multer');
+const storage = multer.memoryStorage(); // Armazena o arquivo na memória
+const upload = multer({ storage: storage });
 
 //GET
 const index = (req, res) => {
   let nome = req.session.user.nome
-  console.log(req.session.user)
-  res.render('index', {nome}); 
+  console.log(req.session)
+  res.render('index', { nome });
 };
 
 const pagar = (req, res) => {
   let nome = req.session.user.nome
-  res.render('pagar', {nome});
+  res.render('pagar', { nome });
 };
 
 const receber = (req, res) => {
   let nome = req.session.user.nome
-  res.render('receber', {nome});
+  res.render('receber', { nome });
 };
 
 const fornecedores = (req, res) => {
   let nome = req.session.user.nome
-  res.render('fornecedores', {nome});
+  res.render('fornecedores', { nome });
 };
 
 const clientes = (req, res) => {
   let nome = req.session.user.nome
-  res.render('clientes', {nome});
+  res.render('clientes', { nome });
 };
 
 const tipoPagamento = (req, res) => {
   let nome = req.session.user.nome
-  res.render('tipoPagamento', {nome});
+  res.render('tipoPagamento', { nome });
 };
 
 const tipoRecebimento = (req, res) => {
   let nome = req.session.user.nome
-  res.render('tipoRecebimento', {nome});
+  res.render('tipoRecebimento', { nome });
 };
 
 const login = (req, res) => {
@@ -257,14 +259,14 @@ const faturamentoGrafico = (req, res) => {
 
 const convertPagarCSV = (data) => {
   const convertedData = data.map(item => {
-      return {
-          'Nome do Fornecedor': item.fornecedor,
-          'CNPJ': item.cnpj,
-          'Data de Vencimento': format(new Date(item.vencimento), 'dd/MM/yyyy'),
-          'Valor': item.valor,
-          'Status': item.status == 'P' ? 'Pago' : 'Em aberto',
-          'Referência': item.nomeTipo
-      };
+    return {
+      'Nome do Fornecedor': item.fornecedor,
+      'CNPJ': item.cnpj,
+      'Data de Vencimento': format(new Date(item.vencimento), 'dd/MM/yyyy'),
+      'Valor': item.valor,
+      'Status': item.status == 'P' ? 'Pago' : 'Em aberto',
+      'Referência': item.nomeTipo
+    };
   });
 
   return convertedData;
@@ -272,37 +274,37 @@ const convertPagarCSV = (data) => {
 
 const convertReceberCSV = (data) => {
   const convertedData = data.map(item => {
-      return {
-          'Nome do Cliente': item.cliente,
-          'CPF/CNPJ': item.cpfcnpj,
-          'Data de Vencimento': format(new Date(item.vencimento), 'dd/MM/yyyy'),
-          'Valor': item.valor,
-          'Status': item.status == 'R' ? 'Pago' : 'Em aberto',
-          'Referência': item.nomeTipo
-          
-      };
+    return {
+      'Nome do Cliente': item.cliente,
+      'CPF/CNPJ': item.cpfcnpj,
+      'Data de Vencimento': format(new Date(item.vencimento), 'dd/MM/yyyy'),
+      'Valor': item.valor,
+      'Status': item.status == 'R' ? 'Pago' : 'Em aberto',
+      'Referência': item.nomeTipo
+
+    };
   });
 
   return convertedData;
 };
 
 const contasPagarCSV = (req, res) => {
-  let nome = req.session.user.nome
+  let nome = req.session.user.nome.split(' ').join('');
   const convertedData = convertPagarCSV(dadosFiltroPagar);
 
   const fields = [
-      'Nome do Fornecedor',
-      'Número do CNPJ',
-      'Data de Vencimento',
-      'Valor',
-      'Status',
-      'Referência'
+    'Nome do Fornecedor',
+    'Número do CNPJ',
+    'Data de Vencimento',
+    'Valor',
+    'Status',
+    'Referência'
   ];
 
   const opts = { fields };
   const csv = json2csv(convertedData, opts);
 
-  const csvFilePath = path.join(__dirname, 'csv', `${nome}-ContasPagar.csv`);
+  const csvFilePath = path.join(__dirname,'..', 'csv', `${nome}-ContasPagar.csv`);
 
   fs.writeFileSync(csvFilePath, csv, 'utf-8');
 
@@ -312,22 +314,22 @@ const contasPagarCSV = (req, res) => {
 };
 
 const contasReceberCSV = (req, res) => {
-  let nome = req.session.user.nome
+  let nome = req.session.user.nome.split(' ').join('');
   const convertedData = convertReceberCSV(dadosFiltroReceber);
 
   const fields = [
-      'Nome do Cliente',
-      'CPF/CNPJ',
-      'Data de Vencimento',
-      'Valor',
-      'Status',
-      'Referência'
+    'Nome do Cliente',
+    'CPF/CNPJ',
+    'Data de Vencimento',
+    'Valor',
+    'Status',
+    'Referência'
   ];
 
   const opts = { fields };
   const csv = json2csv(convertedData, opts);
 
-  const csvFilePath = path.join(__dirname, 'csv', `${nome}-ContasReceber.csv`);
+  const csvFilePath = path.join(__dirname,'..', 'csv', `${nome}-ContasReceber.csv`);
 
 
   fs.writeFileSync(csvFilePath, csv, 'utf-8');
@@ -336,6 +338,35 @@ const contasReceberCSV = (req, res) => {
   res.download(csvFilePath);
 
 };
+
+const downloadComprovante = (req, res) => {
+  const filename = req.params.filename;
+  const extensao = req.params.extensao;
+  const originalFilePath = path.join(__dirname, '..', 'uploads', filename);
+  const newFilename = `comprovante${filename}.${extensao}`;
+  const newFilePath = path.join(__dirname, '..', 'downloads', newFilename);
+
+  fs.copyFile(originalFilePath, newFilePath, (copyErr) => {
+    if (copyErr) {
+      console.error('Erro ao copiar o arquivo:', copyErr);
+      res.status(500).send('Erro ao copiar o arquivo');
+    } else {
+      res.download(newFilePath, (downloadErr) => {
+        if (downloadErr) {
+          console.error('Erro ao baixar o arquivo:', downloadErr);
+          res.status(500).send('Erro ao baixar o arquivo');
+        } else {
+          fs.unlink(newFilePath, (unlinkErr) => {
+            if (unlinkErr) {
+              console.error('Erro ao excluir o arquivo renomeado:', unlinkErr);
+            }
+          });
+        }
+      });
+    }
+  });
+};
+
 
 
 //POST
@@ -362,7 +393,6 @@ const adicionarTipoPagamento = (req, res) => {
   }
 };
 
-
 const adicionarTipoRecebimento = (req, res) => {
   try {
     const userData = req.body;
@@ -384,7 +414,6 @@ const adicionarTipoRecebimento = (req, res) => {
     res.status(500).json({ error: 'Ocorreu um erro inesperado.' });
   }
 };
-
 
 const adicionarFornecedor = (req, res) => {
   try {
@@ -503,6 +532,8 @@ const deleteFornecedor = (req, res) => {
   try {
     const userData = req.body;
     const idFornecedor = req.body.id;
+    const dataAtual = new Date();
+    userData.deletado = dataAtual;
     userData.status = 'I';
     service.deleteFornecedor(idFornecedor, userData, (err, result) => {
       if (err) {
@@ -547,6 +578,8 @@ const deleteCliente = (req, res) => {
   try {
     const userData = req.body;
     const idCliente = req.body.id;
+    const dataAtual = new Date();
+    userData.deletado = dataAtual;
     userData.status = 'I';
 
     service.deleteCliente(idCliente, userData, (err, result) => {
@@ -569,6 +602,8 @@ const deleteTipoPagamento = (req, res) => {
   try {
     const userData = req.body;
     const idTipo = req.body.id;
+    const dataAtual = new Date();
+    userData.deletado = dataAtual;
     userData.status = 'I';
 
     service.deleteTipoPagamento(idTipo, userData, (err, result) => {
@@ -591,6 +626,8 @@ const deleteTipoRecebimento = (req, res) => {
   try {
     const userData = req.body;
     const idTipo = req.body.id;
+    const dataAtual = new Date();
+    userData.deletado = dataAtual;
     userData.status = 'I';
 
     service.deleteTipoRecebimento(idTipo, userData, (err, result) => {
@@ -639,7 +676,7 @@ const deleteContaPagar = (req, res) => {
     const userData = req.body;
     const idConta = req.body.id;
     const dataAtual = new Date();
-    userData.baixa = dataAtual;
+    userData.deletado = dataAtual;
     userData.status = 'D';
     console.log(userData);
 
@@ -666,7 +703,12 @@ const baixarContaPagar = (req, res) => {
     const dataAtual = new Date();
     userData.baixa = dataAtual;
     userData.status = 'P';
-    console.log(userData);
+
+    if (req.file) {
+      const arquivo = req.file;
+      userData.comprovante = arquivo.filename;
+      userData.extensao = arquivo.mimetype.split('/')[1];
+    }
 
     service.baixarContaPagar(idConta, userData, (err, result) => {
       if (err) {
@@ -713,7 +755,7 @@ const deleteContaReceber = (req, res) => {
     const userData = req.body;
     const idConta = req.body.id;
     const dataAtual = new Date();
-    userData.baixa = dataAtual;
+    userData.deletado = dataAtual;
     userData.status = 'D';
     console.log(userData);
 
@@ -740,6 +782,12 @@ const baixarContaReceber = (req, res) => {
     userData.baixa = dataAtual;
     userData.status = 'R';
     console.log(userData);
+
+    if (req.file) {
+      const arquivo = req.file;
+      userData.comprovante = arquivo.filename;
+      userData.extensao = arquivo.mimetype.split('/')[1];
+    }
 
     service.baixarContaReceber(idConta, userData, (err, result) => {
       if (err) {
@@ -797,6 +845,6 @@ module.exports = {
   despesaGrafico,
   faturamentoGrafico,
   contasPagarCSV,
-  contasReceberCSV
-
+  contasReceberCSV,
+  downloadComprovante
 };

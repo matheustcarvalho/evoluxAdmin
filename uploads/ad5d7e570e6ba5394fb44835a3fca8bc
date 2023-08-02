@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Você vai casar comigo?</title>
+  <style>
+    #nao {
+      position: relative;
+      left: 0;
+      transition: left 0.3s ease;
+    }
+
+    #nao:hover {
+      left: 20px;
+    }
+
+    #mensagem {
+      display: none;
+      color: green;
+      font-weight: bold;
+      font-size: 24px;
+    }
+  </style>
+  <script>
+    function exibirMensagem() {
+      var mensagem = document.getElementById("mensagem");
+      mensagem.style.display = "block";
+    }
+  </script>
+</head>
+<body>
+  <h1>Você vai casar comigo?</h1>
+  <div id="nao">não</div>
+  <div id="mensagem">Parabéns! A data do casamento sera marcada em breve.</div>
+  <script>
+    var nao = document.getElementById("nao");
+    nao.addEventListener("click", exibirMensagem);
+  </script>
+</body>
+</html>
+

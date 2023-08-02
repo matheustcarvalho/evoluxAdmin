@@ -15,7 +15,6 @@
                     <div class="form-group">
                         <label for="validationTooltip01">Tipo de Pagamento:</label>
                         <input type="text" class="form-control" name="descricao" id="descricao" required>
-                        <input type="hidden" name="idEmpresa" id="idEmpresa" value="1">
                     </div>
                 </form>
             </div>
@@ -130,8 +129,7 @@
                     </tr>`
                 }
 
-                $("#tipos").append(list)
-
+                $("#tipos").html(list)
             },
             error: function (error) {
                 console.error(error);

@@ -253,10 +253,10 @@
                 <p class="cnpj-cliente"></p>
                 <p class="vencimento-conta"></p>
                 <p class="valor-conta"></p>
-                <form id="baixarConta">
+                <form id="baixarConta" enctype="multipart/form-data">
                     <input type="hidden" class="form-control" name="id" id="idContaBaixar" value="" required>
-                    {{! <label for="inputZip"><b>Anexar Comprovante:</b></label>
-                    <input type="file" class="form-control-file" name="comprovante" id="comprovante"> }}
+                    <label for="inputZip"><b>Anexar Comprovante:</b></label>
+                    <input type="file" class="form-control-file" name="fileInput" id="comprovante" accept=".pdf,.png,.jpg,.jpeg">
                 </form>
             </div>
             <div class="modal-footer">
@@ -323,9 +323,17 @@
                     let ano = dataForm[0];
 
                     let divContent = '';
+                    let divDownload = '';
                     if (contas.status == 'A') {
                         divContent = `
                             <a data-id="${contas.id}" data-cnpj="${contas.cpfcnpj}" data-descricao="${contas.descricao}" data-cliente="${contas.cliente}" data-idCliente="${contas.idCliente}" data-idTipo="${contas.idTipo}" data-nomeTipo="${contas.nomeTipo}" data-status="${contas.status}" data-valor="${contas.valor}" data-vencimento="${contas.vencimento}" class="dropdown-item mb-1" data-toggle="modal" id="baixar" data-target="#baixaModal"><i class='fas fa-donate' style='font-size:13px'></i><b>  Receber</b></a>
+                            <hr class="sidebar-divider my-0">
+                            `;
+                    }
+
+                    if (contas.status == 'R' && contas.comprovante) {
+                        divDownload = `
+                            <a class="dropdown-item mb-1" href="/download/${contas.comprovante}/${contas.extensao}"><i class='fas fa-file-alt' style='font-size:13px'></i><b>  Comprovante</b></a>
                             <hr class="sidebar-divider my-0">
                             `;
                     }
@@ -344,6 +352,7 @@
                                 </a>
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                                         ${divContent}
+                                        ${divDownload}
                                         <a data-id="${contas.id}" data-cnpj="${contas.cpfcnpj}" data-descricao="${contas.descricao}" data-cliente="${contas.cliente}" data-idCliente="${contas.idCliente}" data-idTipo="${contas.idTipo}" data-nomeTipo="${contas.nomeTipo}"   data-status="${contas.status}" data-valor="${contas.valor}" data-vencimento="${contas.vencimento}" class="dropdown-item mb-1 mt-1" data-toggle="modal" id="editar" data-target="#Modal-editar"><i class='fas fa-pen' style='font-size:13px'></i><b>  Editar</b></a>
                                         <hr class="sidebar-divider my-0">
                                         <a data-id-delete="${contas.id}" id="excluir" data-cliente="${contas.cliente}" data-cnpj="${contas.cpfcnpj}" data-vencimento="${contas.vencimento}" data-valor="${contas.valor}" class="dropdown-item mt-1" data-toggle="modal" style="color:#ff1212" data-target="#deletModal"><i class='fas fa-trash' style='font-size:13px'></i> <b>Excluir</b></a>
@@ -356,6 +365,8 @@
                 $("#contas").empty();
 
                 $("#contas").html(list)
+
+                $('#dataTable').DataTable();
 
                 limparInput();
 
@@ -500,19 +511,16 @@
     $('#baixarConta').on("submit", function (e) {
 
         e.preventDefault();
-        let formData = new FormData($("#baixarConta").get(0));
-
-        const data = {};
-        formData.forEach((val, key) => {
-            data[key] = val;
-        });
+        let formData = new FormData(this);
 
         $.ajax({
 
             url: '/baixar-conta-receber',
             method: 'POST',
             dataType: 'json',
-            data,
+            data: formData,
+            processData: false,
+            contentType: false,
             success: function (response) {
                 Swal.fire({
                     title: response.message,
@@ -647,5 +655,5 @@
 <!-- Page level plugins -->
 <script src="vendor/datatables/jquery.dataTables.js"></script>
 <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="js/demo/datatables-demo.js"></script>
+
 {{> partials/footer}}

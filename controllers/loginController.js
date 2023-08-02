@@ -17,7 +17,7 @@ const login = async (req, res) => {
             }
 
             if (results.length === 0) {
-                res.status(404).render('login', { status: 'error', message: 'Email não encontrado.' });
+                res.status(404).render('login', { status: 'error', message: 'E-mail e/ou senha inválidos.' });
                 return;
             }
 
@@ -33,7 +33,7 @@ const login = async (req, res) => {
 
                 res.redirect('/home');
             } else {
-                res.status(401).render('login', { status: 'error', message: 'Senha incorreta.' });
+                res.status(401).render('login', { status: 'error', message: 'E-mail e/ou senha inválidos.' });
             }
         });
     } catch (err) {
