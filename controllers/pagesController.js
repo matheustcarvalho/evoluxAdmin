@@ -1,10 +1,16 @@
 const connection = require('../db');
 const service = require('../service/service');
 const bcrypt = require('bcrypt');
+const json2csv = require('json2csv').parse;
+const fs = require('fs');
+const { format } = require('date-fns');
+const path = require('path');
+
 
 //GET
 const index = (req, res) => {
   let nome = req.session.user.nome
+  console.log(req.session.user)
   res.render('index', {nome}); 
 };
 
@@ -105,7 +111,7 @@ const tiposRecebimentoList = (req, res) => {
   }
 };
 
-
+let dadosFiltroPagar = [];
 const contasPagarList = (req, res) => {
   try {
     let vencimentoIni = req.body.vencimentoIni;
@@ -121,6 +127,7 @@ const contasPagarList = (req, res) => {
         res.status(500).json({ error: err });
       } else {
         res.json(users);
+        dadosFiltroPagar = users;
       }
     });
   } catch (error) {
@@ -128,7 +135,7 @@ const contasPagarList = (req, res) => {
   }
 };
 
-
+let dadosFiltroReceber = [];
 const contasReceberList = (req, res) => {
   try {
     let vencimentoIni = req.body.vencimentoIni;
@@ -144,6 +151,7 @@ const contasReceberList = (req, res) => {
         res.status(500).json({ error: err });
       } else {
         res.json(users);
+        dadosFiltroReceber = users;
       }
     });
   } catch (error) {
@@ -245,6 +253,88 @@ const faturamentoGrafico = (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Ocorreu um erro inesperado." });
   }
+};
+
+const convertPagarCSV = (data) => {
+  const convertedData = data.map(item => {
+      return {
+          'Nome do Fornecedor': item.fornecedor,
+          'CNPJ': item.cnpj,
+          'Data de Vencimento': format(new Date(item.vencimento), 'dd/MM/yyyy'),
+          'Valor': item.valor,
+          'Status': item.status == 'P' ? 'Pago' : 'Em aberto',
+          'Referência': item.nomeTipo
+      };
+  });
+
+  return convertedData;
+};
+
+const convertReceberCSV = (data) => {
+  const convertedData = data.map(item => {
+      return {
+          'Nome do Cliente': item.cliente,
+          'CPF/CNPJ': item.cpfcnpj,
+          'Data de Vencimento': format(new Date(item.vencimento), 'dd/MM/yyyy'),
+          'Valor': item.valor,
+          'Status': item.status == 'R' ? 'Pago' : 'Em aberto',
+          'Referência': item.nomeTipo
+          
+      };
+  });
+
+  return convertedData;
+};
+
+const contasPagarCSV = (req, res) => {
+  let nome = req.session.user.nome
+  const convertedData = convertPagarCSV(dadosFiltroPagar);
+
+  const fields = [
+      'Nome do Fornecedor',
+      'Número do CNPJ',
+      'Data de Vencimento',
+      'Valor',
+      'Status',
+      'Referência'
+  ];
+
+  const opts = { fields };
+  const csv = json2csv(convertedData, opts);
+
+  const csvFilePath = path.join(__dirname, 'csv', `${nome}-ContasPagar.csv`);
+
+  fs.writeFileSync(csvFilePath, csv, 'utf-8');
+
+  console.log('CSV gerado com sucesso!');
+  res.download(csvFilePath);
+
+};
+
+const contasReceberCSV = (req, res) => {
+  let nome = req.session.user.nome
+  const convertedData = convertReceberCSV(dadosFiltroReceber);
+
+  const fields = [
+      'Nome do Cliente',
+      'CPF/CNPJ',
+      'Data de Vencimento',
+      'Valor',
+      'Status',
+      'Referência'
+  ];
+
+  const opts = { fields };
+  const csv = json2csv(convertedData, opts);
+
+  const csvFilePath = path.join(__dirname, 'csv', `${nome}-ContasReceber.csv`);
+
+
+  fs.writeFileSync(csvFilePath, csv, 'utf-8');
+
+  console.log('CSV gerado com sucesso!');
+  res.download(csvFilePath);
+
 };
 
 
@@ -618,7 +708,6 @@ const editarContaReceber = (req, res) => {
   }
 };
 
-
 const deleteContaReceber = (req, res) => {
   try {
     const userData = req.body;
@@ -642,7 +731,6 @@ const deleteContaReceber = (req, res) => {
     res.status(500).json({ error: 'Ocorreu um erro inesperado durante a exclusão da conta' });
   }
 };
-
 
 const baixarContaReceber = (req, res) => {
   try {
@@ -707,6 +795,8 @@ module.exports = {
   faturamentoMesList,
   despesaMesList,
   despesaGrafico,
-  faturamentoGrafico
+  faturamentoGrafico,
+  contasPagarCSV,
+  contasReceberCSV
 
 };

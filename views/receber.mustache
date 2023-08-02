@@ -162,21 +162,16 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-gradient-secondary"><b>Contas a Receber</b></h6>
-            <button type="button" class="btn btn-secondary" data-toggle="modal" title="Adicionar Recebimento"
-                data-target="#Modal-cadastrar">
-                <i class="fas fa-plus"></i>
-            </button>
+            <div class="d-flex">
+                <button type="button" class="btn btn-secondary" id="btnDownloadCSV" title="Baixar relatório">
+                    <i class="fas fa-download"></i>
+                </button>
+                <button type="button" class="btn btn-secondary ml-3" data-toggle="modal" title="Adicionar Pagamento" data-target="#Modal-cadastrar">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
         </div>
-        {{! <div class="row justify-content-end pr-3 mt-1">
-            <a href="#" class="btn btn-danger btn-circle mx-1" title="Excluir" data-toggle="modal"
-                data-target="#deletModal">
-                <i class="fas fa-trash"></i>
-            </a>
-            <a href="#" class="btn btn-success btn-circle mx-1" title="Dar baixa" data-toggle="modal"
-                data-target="#baixaModal">
-                <i class="fa fa-check-square" aria-hidden="true"></i>
-            </a>
-        </div> }}
+
 
         <div class="card-body">
             <div class="table-responsive">
@@ -555,6 +550,10 @@
 
     });
 
+    $('#btnDownloadCSV').on('click', function() {
+    window.location.href = '/receber-CSV';
+    });
+
     $("#contas").on('click', '#excluir', function () {
 
         let cliente = $(this).data('cliente')
@@ -632,6 +631,7 @@
     listClientes();
     listContas();
     listTipos();
+    
 </script>
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>

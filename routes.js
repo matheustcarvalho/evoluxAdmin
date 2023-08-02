@@ -51,6 +51,8 @@ router.get('/faturamento-mes', pagesController.faturamentoMesList);
 router.get('/despesa-mes', pagesController.despesaMesList);
 router.get('/despesa-grafico', pagesController.despesaGrafico);
 router.get('/faturamento-grafico', pagesController.faturamentoGrafico);
+router.get('/pagar-CSV', pagesController.contasPagarCSV);
+router.get('/receber-CSV', pagesController.contasReceberCSV);
 
 //Rotas POST
 router.post('/novo-tipo-pagar', pagesController.adicionarTipoPagamento); 
