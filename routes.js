@@ -25,6 +25,8 @@ router.use(session({
 //Pages
 router.get('/',pagesController.login);
 router.post('/', loginController.login); 
+router.get('/cadastro',pagesController.cadastro);
+router.post('/registrar', loginController.register); 
 
 // Middleware para verificar a validade da sessão
 router.use(loginController.requireAuthentication);
@@ -36,7 +38,6 @@ router.get('/fornecedores',pagesController.fornecedores);
 router.get('/clientes',pagesController.clientes);
 router.get('/tipo-pagamento',pagesController.tipoPagamento);
 router.get('/tipo-recebimento',pagesController.tipoRecebimento);
-router.get('/cadastro',pagesController.cadastro);
 router.get('/404', (req, res) => {
   res.render('404'); 
 });
@@ -62,7 +63,7 @@ router.post('/novo-tipo-pagar', pagesController.adicionarTipoPagamento);
 router.post('/novo-tipo-receber', pagesController.adicionarTipoRecebimento);
 router.post('/novo-fornecedor', pagesController.adicionarFornecedor);
 router.post('/novo-cliente', pagesController.adicionarCliente);
-router.post('/nova-conta-pagar', pagesController.adicionarContaPagar);
+router.post('/nova-conta-pagar', upload.single('fileInput'), pagesController.adicionarContaPagar);
 router.post('/nova-conta-receber', pagesController.adicionarContaReceber);
 router.post('/edit-fornecedor', pagesController.editarFornecedor); 
 router.post('/delete-fornecedor', pagesController.deleteFornecedor);
@@ -79,7 +80,6 @@ router.post('/baixar-conta-receber', upload.single('fileInput'), pagesController
 
 //LOGIN
 
-router.post('/registrar', loginController.register); 
 router.post('/logout', loginController.logout);
 
   

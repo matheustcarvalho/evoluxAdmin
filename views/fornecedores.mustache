@@ -69,7 +69,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="formFornecedor" class="btn btn-primary">Salvar</button>
+                <button type="submit" form="formFornecedor" class="btn btn-primary btnSalvar">Salvar</button>
             </div>
         </div>
     </div>
@@ -147,7 +147,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="formFornecedorEdit" class="btn btn-primary">Salvar</button>
+                <button type="submit" form="formFornecedorEdit" class="btn btn-primary btnSalvar">Salvar</button>
             </div>
         </div>
     </div>
@@ -165,13 +165,6 @@
                 <i class="fas fa-plus"></i>
             </button>
         </div>
-
-        {{! <div class="row justify-content-end pr-3 mt-1">
-            <a href="#" class="btn btn-danger btn-circle mx-1" title="Excluir" data-toggle="modal"
-                data-target="#deletModal">
-
-            </a>
-        </div> }}
 
         <div class="card-body">
             <div class="table-responsive">
@@ -198,6 +191,11 @@
 
                     </tbody>
                 </table>
+            </div>
+            <div id="loading" class="text-center">
+                <div class="spinner-grow" role="status">
+                    <span class="sr-only"></span>
+                </div>
             </div>
         </div>
     </div>
@@ -227,7 +225,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                <button type="submit" form="deleteFornecedor" class="btn btn-danger">Excluir</button>
+                <button type="submit" form="deleteFornecedor" class="btn btn-danger btnSalvar">Excluir</button>
             </div>
         </div>
     </div>
@@ -237,6 +235,7 @@
 <script>
 
     function listFornecedores() {
+        $("#loading").prop("hidden", false);
         $.ajax({
             type: 'GET',
             url: `/fornecedores-list`,
@@ -268,19 +267,20 @@
                 }
 
                 $("#fornecedores").html(list)
-
+                $("#loading").prop("hidden", true);
                 $('#dataTable').DataTable();
 
             },
             error: function (error) {
                 console.error(error);
+                $("#loading").prop("hidden", true);
             }
 
         })
     }
 
     $('#formFornecedor').on("submit", function (e) {
-
+        $(".btnSalvar").prop("disabled", true);
         e.preventDefault();
         let formData = new FormData($("#formFornecedor").get(0));
 
@@ -313,7 +313,7 @@
     });
 
     $('#formFornecedorEdit').on("submit", function (e) {
-
+        $(".btnSalvar").prop("disabled", true);
         e.preventDefault();
         let formData = new FormData($("#formFornecedorEdit").get(0));
 
@@ -348,7 +348,7 @@
     });
 
     $('#deleteFornecedor').on("submit", function (e) {
-
+        $(".btnSalvar").prop("disabled", true);
         e.preventDefault();
         let formData = new FormData($("#deleteFornecedor").get(0));
 
@@ -405,13 +405,13 @@
         let email = $(this).data('email')
         let idFornecedor = $(this).data('id')
 
-        carregarCidades(estado);
+        carregarCidadesEdit(estado, cidade);
 
         $('#nomeEdit').val(nome);
         $('#cnpjEdit').val(cnpj);
         $('#estadoEdit').val(estado);
         $('#estadoEdit option[value="' + estado + '"]').prop('selected', true);
-        $('#cidadeEdit').val(cidade);
+        $('#cidadeEdit option[value="' + cidade + '"]').prop('selected', true);
         $('#bairroEdit').val(bairro);
         $('#ruaEdit').val(rua);
         $('#numeroEdit').val(numero);
@@ -419,7 +419,6 @@
         $('#telefoneEdit').val(telefone);
         $('#emailEdit').val(email);
         $('#idFornecedorEdit').val(idFornecedor);
-
 
     });
 
@@ -482,6 +481,30 @@
         });
     }
 
+    function carregarCidadesEdit(estadoSigla, cidadeSelecionada) {
+        $.ajax({
+            url: `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoSigla}/municipios`,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                const $cidadeEdit = $('#cidadeEdit');
+
+                $cidadeEdit.empty();
+
+                let list = '';
+                for (const cidade of data) {
+                    list += `<option value="${cidade.nome}">${cidade.nome}</option>`;
+                }
+
+                $cidadeEdit.append(list);
+
+                if (cidadeSelecionada) {
+                    $cidadeEdit.val(cidadeSelecionada);
+                }
+            }
+        });
+    }
+
     carregarEstados();
 
     $('#estado').change(function () {
@@ -496,7 +519,7 @@
     $('#estadoEdit').change(function () {
         const estadoSelecionado = $(this).val();
         if (estadoSelecionado) {
-            carregarCidades(estadoSelecionado);
+            carregarCidadesEdit(estadoSelecionado); // Usar a função para o formulário de edição
         } else {
             $('#cidadeEdit').empty().append('<option value="">Selecione um estado</option>');
         }
@@ -506,7 +529,7 @@
     $('#telefoneEdit').inputmask('(99) 99999-9999');
     $('#cnpj').inputmask('99.999.999/9999-99');
     $('#cnpjEdit').inputmask('99.999.999/9999-99');
- 
+
     listFornecedores();
 </script>
 

@@ -6,13 +6,12 @@ const fs = require('fs');
 const { format } = require('date-fns');
 const path = require('path');
 const multer = require('multer');
-const storage = multer.memoryStorage(); // Armazena o arquivo na memória
+const storage = multer.memoryStorage(); 
 const upload = multer({ storage: storage });
 
 //GET
 const index = (req, res) => {
   let nome = req.session.user.nome
-  console.log(req.session)
   res.render('index', { nome });
 };
 
@@ -48,11 +47,14 @@ const tipoRecebimento = (req, res) => {
 
 const login = (req, res) => {
   res.render('login');
-  console.log(req.session)
 };
 
 const cadastro = (req, res) => {
-  res.render('cadastro');
+  // if(req.session.user.id !== 3){
+  //   res.redirect('/home')
+  // }else{
+    res.render('cadastro');
+  // }
 };
 
 const fornecedoresList = (req, res) => {
@@ -367,8 +369,6 @@ const downloadComprovante = (req, res) => {
   });
 };
 
-
-
 //POST
 
 const adicionarTipoPagamento = (req, res) => {
@@ -385,7 +385,7 @@ const adicionarTipoPagamento = (req, res) => {
       if (err) {
         res.status(500).json({ error: err });
       } else {
-        res.status(201).json({ message: 'Pagamento adicionado com sucesso!' });
+        res.status(201).json({ message: 'Tipo de pagamento adicionado com sucesso!' });
       }
     });
   } catch (error) {
@@ -467,6 +467,13 @@ const adicionarContaPagar = (req, res) => {
     if (userData.status === 'P') {
       userData.baixa = dataAtual;
     }
+
+    if (req.file) {
+      const arquivo = req.file;
+      userData.comprovante = arquivo.filename;
+      userData.extensao = arquivo.mimetype.split('/')[1];
+    }
+    
     console.log(userData);
 
     service.adicionarContaPagar(userData, (err, result) => {
@@ -538,7 +545,7 @@ const deleteFornecedor = (req, res) => {
     service.deleteFornecedor(idFornecedor, userData, (err, result) => {
       if (err) {
         console.error('Erro na atualização:', err);
-        res.status(500).json({ error: 'Erro ao atualizar fornecedor' });
+        res.status(500).json({ error: 'Erro ao deletar fornecedor' });
       } else {
         console.log('Fornecedor atualizado com sucesso:', result);
         res.status(200).json({ message: 'Fornecedor deletado!' });
@@ -564,7 +571,7 @@ const editarCliente = (req, res) => {
         res.status(500).json({ error: 'Erro ao atualizar Cliente' });
       } else {
         console.log('Cliente atualizado com sucesso:', result);
-        res.status(200).json({ message: 'Cliente atualizado com sucesso' });
+        res.status(200).json({ message: 'Cliente atualizado com sucesso!' });
       }
     });
   } catch (error) {
@@ -652,6 +659,8 @@ const editarContaPagar = (req, res) => {
     const idConta = req.body.id;
     if (req.body.status === 'A') {
       userData.baixa = null;
+      userData.comprovante = null;
+      userData.extensao = null;
     }
     console.log(userData);
 
@@ -732,6 +741,8 @@ const editarContaReceber = (req, res) => {
     const idConta = req.body.id;
     if (req.body.status === 'A') {
       userData.baixa = null;
+      userData.comprovante = null;
+      userData.extensao = null;
     }
     console.log(userData);
 

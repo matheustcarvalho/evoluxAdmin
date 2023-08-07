@@ -19,7 +19,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="tipoPagamento" class="btn btn-primary">Adicionar</button>
+                <button type="submit" form="tipoPagamento" class="btn btn-primary btnSalvar">Adicionar</button>
             </div>
         </div>
     </div>
@@ -61,6 +61,11 @@
                     </tbody>
                 </table>
             </div>
+            <div id="loading" class="text-center">
+                <div class="spinner-grow" role="status">
+                    <span class="sr-only"></span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -88,7 +93,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                <button type="submit" form="deleteTipo" class="btn btn-danger">Excluir</button>
+                <button type="submit" form="deleteTipo" class="btn btn-danger btnSalvar">Excluir</button>
             </div>
         </div>
     </div>
@@ -96,6 +101,7 @@
 
 <script>
     function listTipos() {
+        $("#loading").prop("hidden", false);
         $.ajax({
             type: 'GET',
             url: `/tipos-pagamento-list`,
@@ -129,17 +135,19 @@
                 }
 
                 $("#tipos").html(list)
+                $("#loading").prop("hidden", true);
 
             },
             error: function (error) {
                 console.error(error);
+                $("#loading").prop("hidden", true);
             }
 
         })
     }
 
     $('#tipoPagamento').on("submit", function (e) {
-
+        $(".btnSalvar").prop("disabled", true);
         e.preventDefault();
         let formData = new FormData($("#tipoPagamento").get(0));
 
@@ -171,7 +179,7 @@
     });
 
     $('#deleteTipo').on("submit", function (e) {
-
+        $(".btnSalvar").prop("disabled", true);
         e.preventDefault();
         let formData = new FormData($("#deleteTipo").get(0));
 

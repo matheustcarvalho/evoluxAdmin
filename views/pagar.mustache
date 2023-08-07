@@ -11,7 +11,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formPagamento">
+                <form id="formPagamento" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Fornecedor</label>
                         <select class="form-control" name="idFornecedor" id="fornecedor">
@@ -31,14 +31,21 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label for="inputAddress2">Vencimento</label>
                             <input type="date" class="form-control" name="vencimento" id="vencimento">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label for="exampleFormControlSelect1">Pagamento Quitado?</label>
                             <select class="form-control" name="status" id="status">
-                                <option value="A">Não</option>
+                                <option value="A" selected>Não</option>
+                                <option value="P">Sim</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="exampleFormControlSelect1">Recorrência?</label>
+                            <select class="form-control" name="status" id="status">
+                                <option value="A" selected>Não</option>
                                 <option value="P">Sim</option>
                             </select>
                         </div>
@@ -47,10 +54,17 @@
                         <label for="exampleFormControlTextarea1">Descrição</label>
                         <textarea class="form-control" name="descricao" id="descricao" rows="3"></textarea>
                     </div>
+                    <div class="form-row" id="anexo-comprovante" type="hidden">
+                        <div class="form-group col-md-12">
+                            <label for="inputZip"><b>Anexar Comprovante:</b></label>
+                            <input type="file" class="form-control-file" name="fileInput" id="anexoComprovante"
+                                accept=".pdf,.png,.jpg,.jpeg">
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="formPagamento" class="btn btn-primary">Salvar</button>
+                <button type="submit" form="formPagamento" class="btn btn-primary btnSalvar">Salvar</button>
             </div>
         </div>
     </div>
@@ -107,7 +121,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="formContaEdit" class="btn btn-primary">Salvar</button>
+                <button type="submit" form="formContaEdit" class="btn btn-primary btnSalvar">Salvar</button>
             </div>
         </div>
     </div>
@@ -166,12 +180,13 @@
                 <button type="button" class="btn btn-secondary" id="btnDownloadCSV" title="Baixar relatório">
                     <i class="fas fa-download"></i>
                 </button>
-                <button type="button" class="btn btn-secondary ml-3" data-toggle="modal" title="Adicionar Pagamento" data-target="#Modal-cadastrar">
+                <button type="button" class="btn btn-secondary ml-3" data-toggle="modal" title="Adicionar Pagamento"
+                    data-target="#Modal-cadastrar">
                     <i class="fas fa-plus"></i>
                 </button>
             </div>
         </div>
-        
+
 
         <div class="card-body">
             <div class="table-responsive">
@@ -200,6 +215,11 @@
 
                     </tbody>
                 </table>
+            </div>
+            <div id="loading" class="text-center">
+                <div class="spinner-grow" role="status">
+                    <span class="sr-only"></span>
+                </div>
             </div>
         </div>
     </div>
@@ -231,7 +251,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                <button type="submit" form="deleteConta" class="btn btn-danger">Excluir</button>
+                <button type="submit" form="deleteConta" class="btn btn-danger btnSalvar">Excluir</button>
             </div>
         </div>
     </div>
@@ -256,12 +276,13 @@
                 <form id="baixarConta" enctype="multipart/form-data">
                     <input type="hidden" class="form-control" name="id" id="idContaBaixar" value="" required>
                     <label for="inputZip"><b>Anexar Comprovante:</b></label>
-                    <input type="file" class="form-control-file" name="fileInput" id="comprovante" accept=".pdf,.png,.jpg,.jpeg">
+                    <input type="file" class="form-control-file" name="fileInput" id="comprovante"
+                        accept=".pdf,.png,.jpg,.jpeg">
                 </form>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                <button type="submit" form="baixarConta" class="btn btn-primary">Pagar</button>
+                <button type="submit" form="baixarConta" class="btn btn-primary btnSalvar">Pagar</button>
             </div>
         </div>
     </div>
@@ -305,6 +326,7 @@
     }
 
     function listContas(filter = null) {
+        $("#loading").prop("hidden", false);
         $.ajax({
             type: 'POST',
             url: `/contas-pagar-list`,
@@ -333,7 +355,7 @@
 
                     if (contas.status == 'P' && contas.comprovante && contas.extensao) {
                         divDownload = `
-                            <a class="dropdown-item mb-1" href="/download/${contas.comprovante}/${contas.extensao}"><i class='fas fa-file-alt' style='font-size:13px'></i><b>  Comprovante</b></a>
+                            <a class="dropdown-item mb-1" href="/download/${contas.comprovante}/${contas.extensao}"><i class='fas fa-file-download' style='font-size:13px'></i><b>  Comprovante</b></a>
                             <hr class="sidebar-divider my-0">
                             `;
                     }
@@ -342,7 +364,7 @@
                     <tr>
                         <td>${contas.fornecedor}</td>
                         <td>${contas.cnpj}</td>
-                        <td>${dia}/${mes}/${ano}</td>
+                        <td >${dia}/${mes}/${ano}</td>
                         <td>R$${contas.valor}</td>
                         <td>${contas.status == 'A' ? 'Em aberto' : 'Pago'}</td>
                         <td class="text-center">
@@ -363,12 +385,17 @@
                 }
 
                 $("#contas").empty();
-
                 $("#contas").html(list)
+                $("#loading").prop("hidden", true);
 
                 $('#dataTable').DataTable();
 
                 limparInput();
+
+            },
+            error: function () {
+
+                $("#loading").prop("hidden", true);
 
             }
 
@@ -425,12 +452,12 @@
         listContasCSV(data)
     });
 
-    $('#btnDownloadCSV').on('click', function() {
-    window.location.href = '/pagar-CSV';
+    $('#btnDownloadCSV').on('click', function () {
+        window.location.href = '/pagar-CSV';
     });
 
     $('#formPagamento').on("submit", function (e) {
-
+        $(".btnSalvar").prop("disabled", true);
         e.preventDefault();
         let formData = new FormData($("#formPagamento").get(0));
 
@@ -443,7 +470,9 @@
             url: '/nova-conta-pagar',
             method: 'POST',
             dataType: 'json',
-            data,
+            data: formData,
+            processData: false,
+            contentType: false,
             success: function (response) {
                 Swal.fire({
                     title: response.message,
@@ -462,7 +491,7 @@
     });
 
     $('#formContaEdit').on("submit", function (e) {
-
+        $(".btnSalvar").prop("disabled", true);
         e.preventDefault();
         let formData = new FormData($("#formContaEdit").get(0));
 
@@ -495,7 +524,7 @@
     });
 
     $('#deleteConta').on("submit", function (e) {
-
+        $(".btnSalvar").prop("disabled", true);
         e.preventDefault();
         let formData = new FormData($("#deleteConta").get(0));
 
@@ -528,7 +557,7 @@
     });
 
     $('#baixarConta').on("submit", function (e) {
-
+        $(".btnSalvar").prop("disabled", true);
         e.preventDefault();
         let formData = new FormData(this);
 
@@ -566,6 +595,7 @@
         let status = $(this).data('status');
         let valor = $(this).data('valor');
         let vencimento = $(this).data('vencimento');
+        let pagou = $('#status').val();
 
         $('#fornecedorEdit').val(idFornecedor);
         $('#valorEdit').val(valor);
@@ -632,26 +662,37 @@
     });
 
     $('#valor').inputmask('currency', {
-      radixPoint: ',', // Ponto decimal
-      groupSeparator: '.', // Separador de milhares
-      allowMinus: false, // Permitir valores negativos (true) ou não (false)
-      digits: 2, // Número de casas decimais
-      autoGroup: true, // Formatar automaticamente enquanto o usuário digita
-      rightAlign: false, // Alinhar à direita
-      unmaskAsNumber: true, // Retornar apenas o número ao obter o valor do campo
+        radixPoint: ',', // Ponto decimal
+        groupSeparator: '.', // Separador de milhares
+        allowMinus: false, // Permitir valores negativos (true) ou não (false)
+        digits: 2, // Número de casas decimais
+        autoGroup: true, // Formatar automaticamente enquanto o usuário digita
+        rightAlign: false, // Alinhar à direita
+        unmaskAsNumber: true, // Retornar apenas o número ao obter o valor do campo
     });
 
     $('#valorEdit').inputmask('currency', {
-      radixPoint: ',', // Ponto decimal
-      groupSeparator: '.', // Separador de milhares
-      allowMinus: false, // Permitir valores negativos (true) ou não (false)
-      digits: 2, // Número de casas decimais
-      autoGroup: true, // Formatar automaticamente enquanto o usuário digita
-      rightAlign: false, // Alinhar à direita
-      unmaskAsNumber: true, // Retornar apenas o número ao obter o valor do campo
+        radixPoint: ',', // Ponto decimal
+        groupSeparator: '.', // Separador de milhares
+        allowMinus: false, // Permitir valores negativos (true) ou não (false)
+        digits: 2, // Número de casas decimais
+        autoGroup: true, // Formatar automaticamente enquanto o usuário digita
+        rightAlign: false, // Alinhar à direita
+        unmaskAsNumber: true, // Retornar apenas o número ao obter o valor do campo
     });
 
-    
+    $("#anexo-comprovante").prop("hidden", true);
+    $('#status').change(function () {
+        let pagou = $(this).val();
+        if (pagou === 'P') {
+            $("#anexo-comprovante").prop("hidden", false);
+        } else {
+            $("#anexo-comprovante").prop("hidden", true);
+        }
+    });
+
+
+
 
     listFornecedores();
     listContas();
@@ -661,13 +702,13 @@
 
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
- <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
+<!-- <script src="vendor/jquery/jquery.min.js"></script> -->
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
- <script src="vendor/jquery-easing/jquery.easing.min.js"></script> 
- <script src="vendor/datatables/jquery.dataTables.js"></script>
- <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="vendor/datatables/jquery.dataTables.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.js"></script>

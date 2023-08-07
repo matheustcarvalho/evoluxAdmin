@@ -50,7 +50,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="formRecebimento" class="btn btn-primary">Salvar</button>
+                <button type="submit" form="formRecebimento" class="btn btn-primary btnSalvar">Salvar</button>
             </div>
         </div>
     </div>
@@ -107,7 +107,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="formContaEdit" class="btn btn-primary">Salvar</button>
+                <button type="submit" form="formContaEdit" class="btn btn-primary btnSalvar">Salvar</button>
             </div>
         </div>
     </div>
@@ -201,6 +201,11 @@
                     </tbody>
                 </table>
             </div>
+            <div id="loading" class="text-center">
+                <div class="spinner-grow" role="status">
+                    <span class="sr-only"></span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -231,7 +236,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                <button type="submit" form="deleteConta" class="btn btn-danger">Excluir</button>
+                <button type="submit" form="deleteConta" class="btn btn-danger btnSalvar">Excluir</button>
             </div>
         </div>
     </div>
@@ -261,7 +266,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                <button type="submit" form="baixarConta" class="btn btn-primary">Receber</button>
+                <button type="submit" form="baixarConta" class="btn btn-primary btnSalvar">Receber</button>
             </div>
         </div>
     </div>
@@ -305,6 +310,7 @@
     }
 
     function listContas(filter = null) {
+        $("#loading").prop("hidden", false);
         $.ajax({
             type: 'POST',
             url: `/contas-receber-list`,
@@ -333,7 +339,7 @@
 
                     if (contas.status == 'R' && contas.comprovante) {
                         divDownload = `
-                            <a class="dropdown-item mb-1" href="/download/${contas.comprovante}/${contas.extensao}"><i class='fas fa-file-alt' style='font-size:13px'></i><b>  Comprovante</b></a>
+                            <a class="dropdown-item mb-1" href="/download/${contas.comprovante}/${contas.extensao}"><i class='fas fa-file-download' style='font-size:13px'></i><b>  Comprovante</b></a>
                             <hr class="sidebar-divider my-0">
                             `;
                     }
@@ -365,10 +371,15 @@
                 $("#contas").empty();
 
                 $("#contas").html(list)
-
+                $("#loading").prop("hidden", true);
                 $('#dataTable').DataTable();
 
                 limparInput();
+
+            },
+            error: function () {
+
+                $("#loading").prop("hidden", true);
 
             }
 
@@ -411,7 +422,7 @@
     });
 
     $('#formRecebimento').on("submit", function (e) {
-
+        $(".btnSalvar").prop("disabled", true);
         e.preventDefault();
         let formData = new FormData($("#formRecebimento").get(0));
 
@@ -443,7 +454,7 @@
     });
 
     $('#formContaEdit').on("submit", function (e) {
-
+        $(".btnSalvar").prop("disabled", true);
         e.preventDefault();
         let formData = new FormData($("#formContaEdit").get(0));
 
@@ -476,7 +487,7 @@
     });
 
     $('#deleteConta').on("submit", function (e) {
-
+        $(".btnSalvar").prop("disabled", true);
         e.preventDefault();
         let formData = new FormData($("#deleteConta").get(0));
 
@@ -509,7 +520,7 @@
     });
 
     $('#baixarConta').on("submit", function (e) {
-
+        $(".btnSalvar").prop("disabled", true);
         e.preventDefault();
         let formData = new FormData(this);
 
